@@ -5,7 +5,6 @@ import { Axis as AxisProps } from './types';
 const yAxisDomain: AxisProps['domain'] = [0, (max: number) => max * 1.1];
 
 const Axis: FC<AxisProps> = (props) => {
-  console.log('axis props', { props });
   if (props.aType === 'x') {
     return <XAxis interval={0} key={props.dataKey as string} {...props} />;
   }

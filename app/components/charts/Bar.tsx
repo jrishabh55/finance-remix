@@ -1,5 +1,5 @@
 import numeral from 'numeral';
-import { FC, memo } from 'react';
+import { FC, Fragment, memo } from 'react';
 import { Bar, BarChart, LabelList, Legend, ResponsiveContainer, Tooltip } from 'recharts';
 import { chartColors } from '~/utils/color';
 import Axis from './Axis';
@@ -16,7 +16,9 @@ const BarComponent: FC<BarChartProps> = ({ containerProps, series, axis, data })
         left: 20,
         bottom: 5
       }}>
-      {axis?.map(Axis)}
+      {axis?.map((a, i) => (
+        <Fragment key={(a.dataKey as string) || i}>{Axis(a)}</Fragment>
+      ))}
 
       <Tooltip cursor={false} content={<CustomTooltip />} />
       <Legend />

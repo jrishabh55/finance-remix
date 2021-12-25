@@ -6,7 +6,7 @@ const Header: FC<{ onSidebarChange: () => void; sidebar: boolean }> = ({
   sidebar
 }) => {
   return (
-    <header className="flex flex-col bg-black">
+    <header className="flex flex-col bg-black shadow-xl border border-black">
       <div className={`pt-2`}>
         <div className="flex flex-col flex-1 max-w-xs w-full pt-5 pb-4 px-6 md:pt-0">
           <div className="flex items-center space-x-3 px-2">

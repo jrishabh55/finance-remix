@@ -16,13 +16,14 @@ export type ChartType = 'bar'; // 'line' | 'pie' | 'doughnut' | 'polarArea' | 'r
 export type ChartData = CategoricalChartProps['data'];
 export type BarProps = BarPropsOriginal & { type: 'bar' };
 export type LineProps = LinePropsOriginal & { type: 'line' };
-export type XAxisProps = XAxisPropsOriginal & { aType: 'x' };
-export type YAxisProps = YAxisPropsOriginal & { aType: 'y' };
+export type XAxisProps = XAxisPropsOriginal & { aType: 'x'; dataType: string };
+export type YAxisProps = YAxisPropsOriginal & { aType: 'y'; dataType: string };
 export type Series = BarProps | LineProps;
 export type Axis = XAxisProps | YAxisProps;
 
 export interface ChartProps extends CategoricalChartProps {
   id: string;
+  title?: string;
   wrapperStyle?: React.CSSProperties;
   type: ChartType;
   containerProps?: typeof ResponsiveContainer;
