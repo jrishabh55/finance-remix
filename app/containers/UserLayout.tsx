@@ -14,9 +14,11 @@ const UserLayout: FC = ({ children }) => {
         <footer className="fixed bottom-0 right-1/2 translate-x-1/2">
           <div className="flex justify-center">
             <div className="text-center">
-              <p className="text-gray-600">
+              <p className="dark:text-secondary text-primary text-lg">
                 Made with <span className="text-red-600">❤</span> by{' '}
-                <a href="https://rishabhjain.dev">Rishabh Jain</a>
+                <a href="https://rishabhjain.dev" className="underline">
+                  Rishabh Jain
+                </a>
               </p>
             </div>
           </div>

@@ -19,8 +19,10 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="dark dark:bg-background">
-        <Outlet />
+      <body className="dark">
+        <div className="bg-primary/30 text-secondary dark:bg-background dark:text-secondary">
+          <Outlet />
+        </div>
         <ScrollRestoration />
         <Scripts />
         {process.env.NODE_ENV === 'development' && <LiveReload />}

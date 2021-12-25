@@ -6,7 +6,7 @@ const Card: FC<{ style?: CSSProperties; bodyStyle?: CSSProperties }> = ({
   style
 }) => {
   return (
-    <div className="bg-black shadow-xl rounded-lg" style={style}>
+    <div className="bg-primary/50 dark:bg-black shadow-xl rounded-lg" style={style}>
       <div className="px-4 py-4 sm:p-6" style={bodyStyle}>
         {children}
       </div>

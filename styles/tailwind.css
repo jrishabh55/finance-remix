@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply text-secondary;
+  @apply dark:text-secondary;
 }
 
 .nav-transition {
