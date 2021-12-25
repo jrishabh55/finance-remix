@@ -3,7 +3,7 @@ import { Link } from 'remix';
 
 export const Sidebar = () => {
   return (
-    <aside className={`w-56 max-w-[14rem] pt-2 bg-black flex-1 px-2 nav-transition`}>
+    <aside className={`w-56 min-w-[14rem] max-w-[14rem] pt-2 bg-black flex-1 px-2 nav-transition`}>
       <ul className="space-y-4">
         <NavItem to="/">Home</NavItem>
         <NavItem to="/finance">Finance</NavItem>
