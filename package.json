@@ -10,7 +10,7 @@
     "dev:css": "tailwindcss -i ./styles/tailwind.css -o ./app/tailwind.css --watch",
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "format": "prettier --write './app/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "postinstall": "remix setup node"
   },
   "dependencies": {

@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-    @apply text-secondary;
+  @apply text-secondary;
 }
