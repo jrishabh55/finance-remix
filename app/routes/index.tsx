@@ -1,9 +1,5 @@
-import Navbar from '~/components/SideNav';
+import UserLayout from '~/containers/userLayout';
 
 export default function Index() {
-  return (
-    <main>
-      <Navbar />
-    </main>
-  );
+  return <UserLayout>Index</UserLayout>;
 }
