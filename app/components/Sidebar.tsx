@@ -14,7 +14,7 @@ export const Sidebar = () => {
 
 export const NavItem: FC<{ to: string }> = ({ children, to }) => {
   return (
-    <li className="text-center py-4 my-2 md:my-0 dark:shadow-lg shadow-background border-b border-background">
+    <li className="text-center py-4 my-2 md:my-0 shadow shadow-background/90 border-b border-background">
       <Link
         to={to}
         className="block mt-1 text-gray-800 hover:text-gray-600 no-underline hover:no-underline">
