@@ -3,7 +3,7 @@ import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from 'rem
 import styles from './tailwind.css';
 
 export const meta: MetaFunction = () => {
-  return { title: 'New Remix App' };
+  return { title: 'Finance helper for non financial people.' };
 };
 
 export function links() {
