@@ -8,6 +8,9 @@
     "build:css": "tailwindcss -i ./styles/tailwind.css -o ./app/tailwind.css --minify",
     "dev": "concurrently \"npm run dev:css\" \"cross-env NODE_ENV=development netlify dev\"",
     "dev:css": "tailwindcss -i ./styles/tailwind.css -o ./app/tailwind.css --watch",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "postinstall": "remix setup node"
   },
   "dependencies": {
@@ -24,6 +27,11 @@
     "@types/react-dom": "^17.0.9",
     "concurrently": "^6.5.1",
     "cross-env": "^7.0.3",
+    "eslint": "^8.5.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-react-app": "^7.0.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.5.1",
     "tailwindcss": "^3.0.7",
     "typescript": "^4.1.2"
   },
