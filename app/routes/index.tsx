@@ -1,6 +1,6 @@
 import { useLoaderData } from 'remix';
 import Trends, { TrendsData } from '~/components/charts/Trends';
-import UserLayout from '~/containers/userLayout';
+import UserLayout from '~/containers/UserLayout';
 import { months } from '~/utils';
 
 type LoaderData = { data: TrendsData };

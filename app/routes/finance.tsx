@@ -1,4 +1,4 @@
-import UserLayout from '~/containers/userLayout';
+import UserLayout from '~/containers/UserLayout';
 
 function Finance() {
   return <UserLayout>Finance route</UserLayout>;
