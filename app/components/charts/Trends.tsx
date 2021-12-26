@@ -1,6 +1,6 @@
 import numeral from 'numeral';
 import { FC } from 'react';
-import Chart from '~/components/Charts';
+import Chart from '~/components/charts';
 
 export type TrendsData = { deposit: number; withdrawal: number; name: string }[];
 
