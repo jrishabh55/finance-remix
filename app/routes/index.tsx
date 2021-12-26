@@ -22,7 +22,7 @@ export default function Index() {
 
   return (
     <UserLayout>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Trends title="Yearly Trend" data={data} />
       </div>
     </UserLayout>
