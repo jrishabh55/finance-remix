@@ -4,7 +4,11 @@ import Chart from '~/components/charts';
 
 export type TrendsData = { deposit: number; withdrawal: number; name: string }[];
 
-const Trends: FC<{ data?: TrendsData; title?: string }> = ({ title, data = [] }) => {
+const Trends: FC<{ data?: TrendsData; title?: string; type?: 'bar' | 'line' }> = ({
+  title,
+  type = 'bar',
+  data = []
+}) => {
   return (
     <Chart
       id="bar-chart"
@@ -18,8 +22,8 @@ const Trends: FC<{ data?: TrendsData; title?: string }> = ({ title, data = [] })
         }
       ]}
       series={[
-        { type: 'bar', dataKey: 'deposit' },
-        { type: 'bar', dataKey: 'withdrawal' }
+        { sType: type, dataKey: 'deposit' },
+        { sType: type, dataKey: 'withdrawal' }
       ]}
       data={data}
     />
