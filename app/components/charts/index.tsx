@@ -1,7 +1,7 @@
 import merge from 'lodash/merge';
 import { CSSProperties, FC, memo, useMemo } from 'react';
 import Card from '../Card';
-import Bar from './Bar';
+import Composite from './Composite';
 import { ChartProps } from './types';
 
 const wrapperStyle: CSSProperties = {
@@ -9,7 +9,16 @@ const wrapperStyle: CSSProperties = {
   minHeight: 400
 };
 
-const defaultSettings = {
+const defaultSettings: Partial<ChartProps> & Record<string, any> = {
+  legend: {
+    show: true,
+    formatter: (value: string) => <span className="capitalize">{value}</span>,
+    align: 'center',
+    verticalAlign: 'top',
+    margin: {
+      left: 100
+    }
+  },
   options: {
     maintainAspectRatio: false,
     plugins: {
@@ -31,7 +40,7 @@ const defaultSettings = {
 };
 
 const ComponentMap = {
-  bar: Bar
+  bar: Composite
 };
 
 const Chart: FC<ChartProps> = ({ wrapperStyle, title, ...props }) => {
