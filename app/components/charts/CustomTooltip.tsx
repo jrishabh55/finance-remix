@@ -1,3 +1,4 @@
+import numeral from 'numeral';
 import { FC, memo } from 'react';
 
 // const CustomTooltipWrapper = styled('div')(({ theme }) => ({
@@ -9,14 +10,19 @@ import { FC, memo } from 'react';
 // }));
 
 const CustomTooltip: FC<any> = (props) => {
-  const { active, payload, label } = props;
+  const { active, payload } = props;
 
   if (active && payload && payload.length) {
     return (
-      <div className="shadow border">
-        <p className="label">
-          <strong>{label}</strong>: ${payload[0].value}
-        </p>
+      <div className="shadow dark:border-black p-2 rounded-lg bg-primary dark:bg-background/80">
+        {payload.map((val: any, i: number) => (
+          <p key={i} className="label">
+            <strong className="capitalize">{val.name}</strong>:
+            <span className={`px-2 [color:${val.color}]`}>
+              {typeof val.value === 'number' ? numeral(val.value).format('0.00a') : val.value}
+            </span>
+          </p>
+        ))}
       </div>
     );
   }
