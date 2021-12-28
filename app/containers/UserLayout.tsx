@@ -6,7 +6,7 @@ const UserLayout: FC = ({ children }) => {
   const [sidebar, setSidebar] = useState(true);
 
   return (
-    <main className="flex flex-col h-screen w-screen max-w-[100vw]">
+    <main className="flex flex-col min-h-screen w-screen max-w-full">
       <Header onSidebarChange={() => setSidebar(!sidebar)} sidebar={sidebar} />
       <main className="flex flex-row flex-grow">
         {sidebar && <Sidebar />}
