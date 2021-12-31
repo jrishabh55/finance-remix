@@ -15,20 +15,19 @@ import CustomTooltip from './CustomTooltip';
 import { ChartProps } from './types';
 
 const margin = {
-  right: 25,
-  left: 0
+  right: 25
 };
 
 const CompositeComponent: FC<ChartProps> = ({ containerProps, legend, series, axis, data }) => (
   <ResponsiveContainer width="100%" height="100%" {...containerProps}>
-    <ComposedChart data={data} margin={margin}>
+    <ComposedChart data={data} margin={margin} stackOffset="sign">
       {axis?.map((a, i) => (
         <Fragment key={(a.dataKey as string) || i}>{Axis(a)}</Fragment>
       ))}
 
       <Tooltip cursor={false} content={<CustomTooltip />} />
       {legend?.show && <Legend {...(legend as any)} />}
-      {series.map(({ ref, ...s }, i) => {
+      {series.map(({ ref, labelList = true, ...s }, i) => {
         if (s.sType === 'bar') {
           return (
             <Bar
@@ -37,12 +36,14 @@ const CompositeComponent: FC<ChartProps> = ({ containerProps, legend, series, ax
               barSize={40}
               {...s}
               ref={ref as any}>
-              <LabelList
-                dataKey={s.dataKey as string}
-                position="top"
-                fill="#FFFFFF"
-                formatter={(value: number) => numeral(value).format('0.0a')}
-              />
+              {labelList && (
+                <LabelList
+                  dataKey={s.dataKey as string}
+                  position="top"
+                  fill="#FFFFFF"
+                  formatter={(value: number) => numeral(value).format('0.0a')}
+                />
+              )}
             </Bar>
           );
         }
@@ -51,14 +52,17 @@ const CompositeComponent: FC<ChartProps> = ({ containerProps, legend, series, ax
           <Line
             key={s.dataKey as string}
             stroke={chartColors[i] ?? chartColors[0]}
+            type="monotone"
             {...s}
             ref={ref as any}>
-            <LabelList
-              dataKey={s.dataKey as string}
-              position="top"
-              fill="#FFFFFF"
-              formatter={(value: number) => numeral(value).format('0.0a')}
-            />
+            {labelList && (
+              <LabelList
+                dataKey={s.dataKey as string}
+                position="top"
+                fill="#FFFFFF"
+                formatter={(value: number) => numeral(value).format('0.0a')}
+              />
+            )}
           </Line>
         );
       })}
