@@ -9,6 +9,7 @@ import {
 } from 'recharts';
 import { CategoricalChartProps } from 'recharts/types/chart/generateCategoricalChart';
 import { CategoricalChartOptions } from 'recharts/types/util/types';
+import { CardProps } from '../Card';
 
 export * from 'recharts';
 export { default } from 'recharts';
@@ -28,6 +29,7 @@ export type Legend = LegendPropsOriginal & { show: boolean };
 export interface ChartProps extends CategoricalChartProps, CategoricalChartOptions {
   id: string;
   title?: string;
+  cardProps?: CardProps;
   wrapperStyle?: React.CSSProperties;
   type: ChartType;
   containerProps?: typeof ResponsiveContainer;

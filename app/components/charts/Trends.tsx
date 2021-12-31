@@ -4,16 +4,28 @@ import Chart from '~/components/charts';
 
 export type TrendsData = { deposit: number; withdrawal: number; name: string }[];
 
-const Trends: FC<{ data?: TrendsData; title?: string; type?: 'bar' | 'line' }> = ({
+export type TrendsProps = {
+  data?: TrendsData;
+  title?: string;
+  type?: 'bar' | 'line';
+  small?: boolean;
+  legend?: boolean;
+};
+
+const Trends: FC<TrendsProps> = ({
   title,
   type = 'bar',
-  data = []
+  data = [],
+  small = false,
+  legend = true
 }) => {
   return (
     <Chart
       id="bar-chart"
       type="bar"
+      cardProps={{ small }}
       title={title}
+      legend={{ show: legend }}
       axis={[
         { aType: 'x', dataKey: 'name' },
         {

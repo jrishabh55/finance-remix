@@ -43,7 +43,7 @@ const ComponentMap = {
   bar: Composite
 };
 
-const Chart: FC<ChartProps> = ({ wrapperStyle, title, ...props }) => {
+const Chart: FC<ChartProps> = ({ wrapperStyle, cardProps, title, ...props }) => {
   const settings = useMemo<ChartProps>(() => {
     const data = {};
     return merge({ data }, defaultSettings, props);
@@ -52,9 +52,9 @@ const Chart: FC<ChartProps> = ({ wrapperStyle, title, ...props }) => {
   const Component = ComponentMap[props.type] as any;
 
   return (
-    <Card>
+    <Card {...cardProps}>
       {title && <div className="text-lg border-b pb-2 border-background">{title}</div>}
-      <div className="pt-2  " style={wrapperStyle}>
+      <div style={wrapperStyle}>
         <Component {...settings} />
       </div>
     </Card>

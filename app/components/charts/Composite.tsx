@@ -14,13 +14,14 @@ import Axis from './Axis';
 import CustomTooltip from './CustomTooltip';
 import { ChartProps } from './types';
 
+const margin = {
+  right: 25,
+  left: 0
+};
+
 const CompositeComponent: FC<ChartProps> = ({ containerProps, legend, series, axis, data }) => (
   <ResponsiveContainer width="100%" height="100%" {...containerProps}>
-    <ComposedChart
-      data={data}
-      margin={{
-        top: 10
-      }}>
+    <ComposedChart data={data} margin={margin}>
       {axis?.map((a, i) => (
         <Fragment key={(a.dataKey as string) || i}>{Axis(a)}</Fragment>
       ))}
