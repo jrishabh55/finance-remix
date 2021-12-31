@@ -17,8 +17,8 @@ export { default } from 'recharts';
 export type ChartType = 'bar'; // 'line' | 'pie' | 'doughnut' | 'polarArea' | 'radar';
 
 export type ChartData = CategoricalChartProps['data'];
-export type BarProps = BarPropsOriginal & { sType: 'bar' };
-export type LineProps = LinePropsOriginal & { sType: 'line' };
+export type BarProps = BarPropsOriginal & { sType: 'bar'; labelList?: boolean };
+export type LineProps = LinePropsOriginal & { sType: 'line'; labelList?: boolean };
 export type XAxisProps = XAxisPropsOriginal & { aType: 'x' };
 export type YAxisProps = YAxisPropsOriginal & { aType: 'y' };
 export type Series = LineProps | BarProps;

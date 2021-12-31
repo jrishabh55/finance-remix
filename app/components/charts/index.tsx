@@ -53,7 +53,14 @@ const Chart: FC<ChartProps> = ({ wrapperStyle, cardProps, title, ...props }) => 
 
   return (
     <Card {...cardProps}>
-      {title && <div className="text-lg border-b pb-2 border-background">{title}</div>}
+      {title && (
+        <div
+          className={`text-lg border-b ${
+            cardProps?.small ? 'py-2 pl-4' : 'pb-2'
+          } border-background`}>
+          {title}
+        </div>
+      )}
       <div style={wrapperStyle}>
         <Component {...settings} />
       </div>

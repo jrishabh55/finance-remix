@@ -1,6 +1,8 @@
 import numeral from 'numeral';
-import { FC } from 'react';
+import { FC, useMemo } from 'react';
 import Chart from '~/components/charts';
+import { borderColors } from '~/utils/color';
+import { Series } from './types';
 
 export type TrendsData = { deposit: number; withdrawal: number; name: string }[];
 
@@ -19,13 +21,37 @@ const Trends: FC<TrendsProps> = ({
   small = false,
   legend = true
 }) => {
+  const series = useMemo(() => {
+    const s: Series[] = [
+      {
+        sType: type,
+        barSize: small ? 20 : 40,
+        labelList: !small,
+        stackId: 'a-1',
+        dataKey: 'deposit'
+      },
+      {
+        sType: type,
+        barSize: small ? 20 : 40,
+        labelList: !small,
+        stackId: 'a-1',
+        dataKey: 'withdrawal'
+      }
+    ];
+
+    if (type !== 'line') {
+      s.push({ sType: 'line', stroke: borderColors.white, labelList: false, dataKey: 'average' });
+    }
+    return s;
+  }, [small, type]);
   return (
     <Chart
       id="bar-chart"
       type="bar"
-      cardProps={{ small }}
+      cardProps={{ small, bg: true }}
       title={title}
       legend={{ show: legend }}
+      wrapperStyle={small ? { height: 250, minHeight: 250 } : undefined}
       axis={[
         { aType: 'x', dataKey: 'name' },
         {
@@ -33,10 +59,7 @@ const Trends: FC<TrendsProps> = ({
           tickFormatter: (value: number) => numeral(value).format('0.0a')
         }
       ]}
-      series={[
-        { sType: type, dataKey: 'deposit' },
-        { sType: type, dataKey: 'withdrawal' }
-      ]}
+      series={series}
       data={data}
     />
   );
