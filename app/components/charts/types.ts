@@ -14,7 +14,7 @@ import { CardProps } from '../Card';
 export * from 'recharts';
 export { default } from 'recharts';
 
-export type ChartType = 'bar'; // 'line' | 'pie' | 'doughnut' | 'polarArea' | 'radar';
+export type ChartType = 'Composite'; // 'line' | 'pie' | 'doughnut' | 'polarArea' | 'radar';
 
 export type ChartData = CategoricalChartProps['data'];
 export type BarProps = BarPropsOriginal & { sType: 'bar'; labelList?: boolean };
@@ -31,7 +31,7 @@ export interface ChartProps extends CategoricalChartProps, CategoricalChartOptio
   title?: string;
   cardProps?: CardProps;
   wrapperStyle?: React.CSSProperties;
-  type: ChartType;
+  type?: ChartType;
   containerProps?: typeof ResponsiveContainer;
   series: Series[];
   axis: Axis[];

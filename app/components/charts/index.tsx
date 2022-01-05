@@ -40,16 +40,22 @@ const defaultSettings: Partial<ChartProps> & Record<string, any> = {
 };
 
 const ComponentMap = {
-  bar: Composite
+  Composite: Composite
 };
 
-const Chart: FC<ChartProps> = ({ wrapperStyle, cardProps, title, ...props }) => {
+const Chart: FC<ChartProps> = ({
+  wrapperStyle,
+  cardProps,
+  title,
+  type = 'Composite',
+  ...props
+}) => {
   const settings = useMemo<ChartProps>(() => {
     const data = {};
     return merge({ data }, defaultSettings, props);
   }, [props]);
 
-  const Component = ComponentMap[props.type] as any;
+  const Component = ComponentMap[type];
 
   return (
     <Card {...cardProps}>
@@ -68,6 +74,6 @@ const Chart: FC<ChartProps> = ({ wrapperStyle, cardProps, title, ...props }) => 
   );
 };
 
-Chart.defaultProps = { wrapperStyle };
+Chart.defaultProps = { wrapperStyle, type: 'Composite' };
 
 export default memo(Chart);

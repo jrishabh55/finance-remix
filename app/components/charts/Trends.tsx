@@ -47,7 +47,6 @@ const Trends: FC<TrendsProps> = ({
   return (
     <Chart
       id="bar-chart"
-      type="bar"
       cardProps={{ small, bg: true }}
       title={title}
       legend={{ show: legend }}
