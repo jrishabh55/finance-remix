@@ -12,6 +12,7 @@ export type TrendsProps = {
   type?: 'bar' | 'line';
   small?: boolean;
   legend?: boolean;
+  stack?: boolean;
 };
 
 const Trends: FC<TrendsProps> = ({
@@ -19,29 +20,30 @@ const Trends: FC<TrendsProps> = ({
   type = 'bar',
   data = [],
   small = false,
-  legend = true
+  legend = true,
+  stack = true
 }) => {
   const series = useMemo(() => {
     const s: Series[] = [
       {
         sType: type,
-        barSize: small ? 20 : 40,
-        stackId: 'a-1',
+        barSize: small || !stack ? 15 : 25,
+        stackId: stack ? 'a-1' : undefined,
         dataKey: 'deposit'
       },
       {
         sType: type,
-        barSize: small ? 20 : 40,
-        stackId: 'a-1',
+        barSize: small || !stack ? 15 : 25,
+        stackId: stack ? 'a-1' : undefined,
         dataKey: 'withdrawal'
       }
     ];
 
-    if (type !== 'line') {
+    if (stack && type !== 'line') {
       s.push({ sType: 'line', stroke: borderColors.white, labelList: false, dataKey: 'average' });
     }
     return s;
-  }, [small, type]);
+  }, [small, type, stack]);
   return (
     <Chart
       id="bar-chart"

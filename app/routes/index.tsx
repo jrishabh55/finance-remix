@@ -1,13 +1,14 @@
 import dayjs from 'dayjs';
 import { useLoaderData } from 'remix';
 import Trends, { TrendsData } from '~/components/charts/Trends';
+import { Title } from '~/components/Typography';
 import UserLayout from '~/containers/UserLayout';
 import { months, randomNumber } from '~/utils';
 
-type LoaderData = { dataMonthly: TrendsData; yearly: TrendsData };
+type LoaderData = { cashflow: TrendsData; profitAndLoss: TrendsData; yearly: TrendsData };
 
-export const loader = () => {
-  const dataMonthly: TrendsData = Array(12)
+export const loader = (): LoaderData => {
+  const cashflow: TrendsData = Array(12)
     .fill(0)
     .map((_, i) => {
       const deposit = randomNumber(1, 200000);
@@ -21,6 +22,14 @@ export const loader = () => {
         average
       };
     });
+
+  const profitAndLoss = cashflow.map((c) => {
+    return {
+      name: c.name,
+      deposit: c.deposit,
+      withdrawal: c.withdrawal * -1
+    };
+  });
 
   const yearly: TrendsData = Array(2)
     .fill(0)
@@ -37,23 +46,27 @@ export const loader = () => {
       };
     });
 
-  return { dataMonthly, yearly };
+  return { cashflow, profitAndLoss, yearly };
 };
 
 export default function Index() {
-  const { dataMonthly, yearly } = useLoaderData<LoaderData>();
+  const { cashflow, profitAndLoss, yearly } = useLoaderData<LoaderData>();
 
   return (
     <UserLayout>
       <div className="grid grid-cols-12 md:grid-cols-12 gap-4">
+        <div className="grid grid-cols-12 col-span-12">
+          <Title>Dashboard</Title>
+        </div>
         <div className="col-span-2">
           <Trends title="Yearly Comparison" data={yearly} small legend={false} />
         </div>
-        <div className="col-span-12">
-          <Trends title="Cash Flow" data={dataMonthly} />
+        <div className="col-span-10"></div>
+        <div className="col-span-6">
+          <Trends title="Cash Flow" data={cashflow} />
         </div>
-        <div className="col-span-12">
-          <Trends title="Monthly Trends" type="line" data={dataMonthly} />
+        <div className="col-span-6">
+          <Trends title="Monthly Trends" stack={false} data={profitAndLoss} />
         </div>
       </div>
     </UserLayout>

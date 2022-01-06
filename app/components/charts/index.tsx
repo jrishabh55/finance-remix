@@ -58,15 +58,7 @@ const Chart: FC<ChartProps> = ({
   const Component = ComponentMap[type];
 
   return (
-    <Card {...cardProps}>
-      {title && (
-        <div
-          className={`text-lg border-b ${
-            cardProps?.small ? 'py-2 pl-4' : 'pb-2'
-          } border-background`}>
-          {title}
-        </div>
-      )}
+    <Card {...cardProps} title={title}>
       <div style={wrapperStyle}>
         <Component {...settings} />
       </div>

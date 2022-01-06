@@ -33,7 +33,7 @@ const CompositeComponent: FC<ChartProps> = ({ containerProps, legend, series, ax
             <Bar
               key={s.dataKey as string}
               fill={chartColors[i] ?? chartColors[0]}
-              barSize={40}
+              barSize={30}
               {...s}
               ref={ref as any}>
               {labelList && (
