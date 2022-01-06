@@ -27,7 +27,7 @@ const CompositeComponent: FC<ChartProps> = ({ containerProps, legend, series, ax
 
       <Tooltip cursor={false} content={<CustomTooltip />} />
       {legend?.show && <Legend {...(legend as any)} />}
-      {series.map(({ ref, labelList = true, ...s }, i) => {
+      {series.map(({ ref, labelList = false, ...s }, i) => {
         if (s.sType === 'bar') {
           return (
             <Bar

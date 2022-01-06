@@ -26,14 +26,12 @@ const Trends: FC<TrendsProps> = ({
       {
         sType: type,
         barSize: small ? 20 : 40,
-        labelList: !small,
         stackId: 'a-1',
         dataKey: 'deposit'
       },
       {
         sType: type,
         barSize: small ? 20 : 40,
-        labelList: !small,
         stackId: 'a-1',
         dataKey: 'withdrawal'
       }
