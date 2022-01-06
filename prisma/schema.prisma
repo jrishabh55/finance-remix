@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+  planetScaleMode      = true
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+}
+
+enum AccountType {
+  BANK
+  CREDIT_CARD
+  INVESTMENT
+  TAX
+  TDS
+}
+
+model User {
+  id          Int           @id @default(autoincrement())
+  createdAt   DateTime      @default(now())
+  email       String        @unique
+  name        String?
+  Account     Account[]
+  Transaction Transaction[]
+}
+
+model Account {
+  id          Int           @id @default(autoincrement())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime
+  name        String
+  type        AccountType   @default(BANK)
+  userId      Int
+  user        User          @relation(fields: [userId], references: [id])
+  Transaction Transaction[]
+}
+
+model Transaction {
+  id              Int             @id @default(autoincrement())
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime
+  amount          Int
+  type            TransactionType @default(DEPOSIT)
+  description     String?
+  transactionDate DateTime
+  accountId       Int
+  userId          Int
+  account         Account         @relation(fields: [accountId], references: [id])
+  user            User            @relation(fields: [userId], references: [id])
+}
