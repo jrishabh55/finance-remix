@@ -1,4 +1,4 @@
-import { CSSProperties, FC } from 'react';
+import { CSSProperties, FC, ReactNode } from 'react';
 import { Title } from './Typography';
 
 export type CardProps = {
@@ -7,20 +7,36 @@ export type CardProps = {
   small?: boolean;
   bg?: boolean;
   title?: string;
+  className: string;
+  footer?: ReactNode;
 };
 
-const Card: FC<CardProps> = ({ children, title, bodyStyle, bg = true, style, small = false }) => {
+const Card: FC<CardProps> = ({
+  children,
+  title,
+  bodyStyle,
+  bg = true,
+  className,
+  style,
+  small = false,
+  footer = null
+}) => {
   return (
-    <div className={bg ? 'bg-primary/50 dark:bg-black shadow-xl rounded-lg' : ''} style={style}>
+    <section
+      className={`${bg ? 'bg-primary/50 dark:bg-black shadow-xl rounded-lg' : ''} ${
+        className ?? ''
+      }`}
+      style={style}>
       {title && (
-        <div className={`border-b pl-4 ${small ? 'py-2' : 'py-4'} border-background`}>
+        <header className={`border-b px-4 ${small ? 'py-2' : 'py-4'} border-background`}>
           <Title>{title}</Title>
-        </div>
+        </header>
       )}
-      <div className={small ? 'p-1 sm:p-1' : 'p-4 sm:p-6'} style={bodyStyle}>
+      <main className={small ? 'p-1 sm:p-1' : 'p-4 sm:p-6'} style={bodyStyle}>
         {children}
-      </div>
-    </div>
+      </main>
+      {footer && <footer className={`px-4 ${small ? 'py-2' : 'py-4'}`}>{footer}</footer>}
+    </section>
   );
 };
 
