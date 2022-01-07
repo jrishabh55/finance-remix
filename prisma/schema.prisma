@@ -27,12 +27,14 @@ enum AccountType {
 }
 
 model User {
-  id          Int           @id @default(autoincrement())
-  createdAt   DateTime      @default(now())
-  email       String        @unique
-  name        String?
-  Account     Account[]
-  Transaction Transaction[]
+  id           Int           @id @default(autoincrement())
+  name         String?
+  username     String        @unique
+  email        String        @unique
+  passwordHash String
+  Account      Account[]
+  Transaction  Transaction[]
+  createdAt    DateTime      @default(now())
 }
 
 model Account {
