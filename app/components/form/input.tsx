@@ -1,4 +1,5 @@
 import { DetailedHTMLProps, FC, InputHTMLAttributes } from 'react';
+import InputWrapper from './InputWrapper';
 
 type InputProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
   label?: string;
@@ -8,24 +9,16 @@ type InputProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLI
 
 const Input: FC<InputProps> = ({ className, error, id, name, label, ...props }) => {
   return (
-    <fieldset className="p-2 flex items-center">
-      {label && (
-        <label
-          htmlFor={id || name}
-          className="text-md m-2  text-primary mx-2 inline-block dark:text-secondary w-48">
-          {label}
-        </label>
-      )}
+    <InputWrapper id={id} name={name} label={label} error={error}>
       <input
         id={id || name}
         name={name}
         {...props}
-        className={`p-1 mx-2 text-primary dark:text-black outline-none rounded-lg shadow dark:shadow-background shadow-primary w-full ${
+        className={`mx-2 p-1 border-none shadow-input rounded-lg ring-0 ring-black ring-opacity-5  bg-black text-primary dark:text-secondary outline-none w-full focus:outline-none ${
           className ?? ''
         }`}
       />
-      {error && <p className="text-red text-sm">{error}</p>}
-    </fieldset>
+    </InputWrapper>
   );
 };
 
