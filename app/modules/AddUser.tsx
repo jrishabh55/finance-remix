@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Form } from 'remix';
 import Button from '~/components/Button';
 import Card from '~/components/Card';
-import Input from '~/components/form/input';
+import Input from '~/components/form/Input';
 
 const AddUser: FC<{ error?: string }> = ({ error }) => {
   return (
