@@ -11,3 +11,11 @@ body {
   @apply duration-1000;
   @apply ease-in-out;
 }
+
+.error-container {
+  @apply flex;
+  @apply flex-col;
+  @apply items-center;
+  @apply p-4;
+  @apply text-error;
+}

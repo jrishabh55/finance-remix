@@ -42,7 +42,7 @@ export const action: ActionFunction = async ({ request }): Promise<ActionData | 
   }
 };
 
-function Finance() {
+function AddUserPage() {
   const actionData = useActionData<ActionData>();
   return (
     <UserLayout>
@@ -67,4 +67,4 @@ export function ErrorBoundary({ error }: { error: Error }) {
   return <div className="error-container">{`There was an error . Sorry.`}</div>;
 }
 
-export default Finance;
+export default AddUserPage;

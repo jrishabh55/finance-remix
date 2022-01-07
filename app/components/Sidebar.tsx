@@ -7,7 +7,7 @@ export const Sidebar = () => {
       className={`md:w-56 w-screen min-w-[100vw] md:min-w-[14rem] md:max-w-[14rem] pt-2 bg-primary/60 dark:bg-black flex-1 px-2 nav-transition`}>
       <ul className="space-y-4">
         <NavItem to="/">Home</NavItem>
-        <NavItem to="/finance">Finance</NavItem>
+        <NavItem to="/user/add">Add User</NavItem>
       </ul>
     </aside>
   );
