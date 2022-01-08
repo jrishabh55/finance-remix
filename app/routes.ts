@@ -1,15 +1,31 @@
-const routes = [
+export type RouteType = {
+  name: string;
+  child?: Required<Omit<RouteType, 'child'>>[];
+  to?: string;
+};
+
+const routes: RouteType[] = [
   {
-    to: '/',
-    name: 'home'
+    name: 'home',
+    to: '/'
   },
   {
-    to: '/user/add',
-    name: 'Add User'
+    name: 'User',
+    child: [
+      {
+        name: 'Add User',
+        to: '/user/add'
+      }
+    ]
   },
   {
-    to: '/account/add',
-    name: 'Add Account'
+    name: 'Account',
+    child: [
+      {
+        name: 'Add Account',
+        to: '/account/add'
+      }
+    ]
   }
 ];
 
