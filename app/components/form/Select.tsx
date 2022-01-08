@@ -22,6 +22,7 @@ const Select: FC<SelectProps> = ({ error, id, name, label, options = [] }) => {
 
   return (
     <InputWrapper id={id} name={name} label={label} error={error}>
+      <input type="hidden" name={name} value={selected.id} />
       <div className="w-full">
         <Listbox value={selected} onChange={setSelected}>
           <div className="relative mt-1">

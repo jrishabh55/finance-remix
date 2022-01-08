@@ -9,6 +9,12 @@ module.exports = {
       black: '#232931',
       error: '#F44336',
       warning: '#FF9800'
+    },
+    extend: {
+      boxShadow: {
+        input: `5px 5px 0px #21262e,
+        -5px -5px 0px #252c34`
+      }
     }
   },
   plugins: [
