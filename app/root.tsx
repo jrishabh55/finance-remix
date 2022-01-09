@@ -1,5 +1,14 @@
-import type { MetaFunction } from 'remix';
-import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from 'remix';
+import {
+  Links,
+  LiveReload,
+  Meta,
+  MetaFunction,
+  Outlet,
+  redirect,
+  Scripts,
+  ScrollRestoration,
+  useCatch
+} from 'remix';
 import styles from './tailwind.css';
 
 export const meta: MetaFunction = () => {
@@ -29,4 +38,21 @@ export default function App() {
       </body>
     </html>
   );
+}
+
+export function CatchBoundary() {
+  const caught = useCatch();
+  switch (caught.status) {
+    case 401: {
+      return redirect('/login');
+    }
+    default: {
+      throw new Error(`Unhandled error: ${caught.status}`);
+    }
+  }
+}
+
+export function ErrorBoundary({ error }: { error: Error }) {
+  console.error(error);
+  return <div className="error-container">{`There was an error . Sorry.`}</div>;
 }
