@@ -5,14 +5,16 @@ import Card from '~/components/Card';
 import Table from '~/components/Table';
 import UserLayout from '~/containers/UserLayout';
 import { db } from '~/utils/db.server';
+import { requireUserId } from '~/utils/session.server';
 
 type LoaderData = {
   accounts: Account[];
 };
 
-export const loader: LoaderFunction = async (): Promise<LoaderData> => {
+export const loader: LoaderFunction = async ({ request }): Promise<LoaderData> => {
+  const userId = await requireUserId(request);
   const accounts = await db.user.findMany({
-    where: { id: 1 },
+    where: { id: userId },
     include: { accounts: true }
   });
 

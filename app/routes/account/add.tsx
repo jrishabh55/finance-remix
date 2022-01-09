@@ -1,8 +1,9 @@
 import { Account, AccountType, Prisma } from '@prisma/client';
-import { ActionFunction, redirect, useActionData, useCatch } from 'remix';
+import { ActionFunction, LoaderFunction, redirect, useActionData, useCatch } from 'remix';
 import UserLayout from '~/containers/UserLayout';
 import AddAccount from '~/modules/AddAccount';
 import { db } from '~/utils/db.server';
+import { requireUserId } from '~/utils/session.server';
 
 type ActionData = {
   account?: Account;
@@ -12,16 +13,22 @@ type ActionData = {
   };
 };
 
+export const loader: LoaderFunction = async ({ request }) => {
+  return requireUserId(request);
+};
+
 export const action: ActionFunction = async ({ request }): Promise<ActionData | Response> => {
+  const userId = await requireUserId(request);
   const body = await request.formData();
   const name = body.get('name')?.toString();
-  if (!name) {
-    return { error: { error: 'Name is required', message: 'Name is required.' } };
+  const type: AccountType = (body.get('type')?.toString() as AccountType) ?? 'BANK';
+  if (!name || !type) {
+    return { error: { error: 'Name and Type is required', message: 'Name is required.' } };
   }
 
   const accountObj = {
     name,
-    type: AccountType.BANK
+    type
   };
 
   switch (request.method) {
@@ -29,7 +36,7 @@ export const action: ActionFunction = async ({ request }): Promise<ActionData | 
       /* handle "POST" */
       try {
         const account = await db.user.update({
-          where: { id: 1 },
+          where: { id: userId },
           data: {
             accounts: {
               create: {
