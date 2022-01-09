@@ -26,15 +26,25 @@ enum AccountType {
   TDS
 }
 
+enum UserRoles {
+  ADMIN
+  USER
+}
+
 model User {
   id           Int           @id @default(autoincrement())
   name         String?
   username     String        @unique
   email        String        @unique
+  role         UserRoles     @default(USER)
   passwordHash String
   accounts     Account[]
   transactions Transaction[]
   createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now())
+  createdBy    Int           @default(0)
+  // creator      User          @relation("Creater", fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  // created      User[]        @relation("Creater")
 }
 
 model Account {
