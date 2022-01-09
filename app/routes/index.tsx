@@ -1,13 +1,15 @@
 import dayjs from 'dayjs';
-import { useLoaderData } from 'remix';
+import { LoaderFunction, useLoaderData } from 'remix';
 import Trends, { TrendsData } from '~/components/charts/Trends';
 import { Title } from '~/components/Typography';
 import UserLayout from '~/containers/UserLayout';
 import { months, randomNumber } from '~/utils';
+import { requireUserId } from '~/utils/session.server';
 
 type LoaderData = { cashflow: TrendsData; profitAndLoss: TrendsData; yearly: TrendsData };
 
-export const loader = (): LoaderData => {
+export const loader: LoaderFunction = ({ request }): LoaderData => {
+  requireUserId(request);
   const cashflow: TrendsData = Array(12)
     .fill(0)
     .map((_, i) => {
