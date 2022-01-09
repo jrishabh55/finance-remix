@@ -32,7 +32,7 @@ const Card: FC<CardProps> = ({
           <Title>{title}</Title>
         </header>
       )}
-      <main className={small ? 'p-1 sm:p-1' : 'p-4 sm:p-6'} style={bodyStyle}>
+      <main className={small ? 'p-1 sm:p-1 w-full' : 'p-4 sm:p-6 w-full'} style={bodyStyle}>
         {children}
       </main>
       {footer && <footer className={`px-4 ${small ? 'py-2' : 'py-4'}`}>{footer}</footer>}
