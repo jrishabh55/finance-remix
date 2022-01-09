@@ -32,20 +32,20 @@ model User {
   username     String        @unique
   email        String        @unique
   passwordHash String
-  Account      Account[]
-  Transaction  Transaction[]
+  accounts     Account[]
+  transactions Transaction[]
   createdAt    DateTime      @default(now())
 }
 
 model Account {
-  id          Int           @id @default(autoincrement())
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @default(now())
-  name        String
-  type        AccountType   @default(BANK)
-  userId      Int
-  user        User          @relation(fields: [userId], references: [id])
-  Transaction Transaction[]
+  id           Int           @id @default(autoincrement())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now())
+  name         String
+  type         AccountType   @default(BANK)
+  userId       Int
+  user         User          @relation(fields: [userId], references: [id])
+  transactions Transaction[]
 }
 
 model Transaction {

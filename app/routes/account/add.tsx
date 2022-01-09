@@ -31,7 +31,7 @@ export const action: ActionFunction = async ({ request }): Promise<ActionData | 
         const account = await db.user.update({
           where: { id: 1 },
           data: {
-            Account: {
+            accounts: {
               create: {
                 ...accountObj
               }
