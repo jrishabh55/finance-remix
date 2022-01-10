@@ -72,7 +72,8 @@ model Transaction {
   updatedAt       DateTime            @default(now())
   amount          Float
   type            TransactionType     @default(DEPOSIT)
-  description     String?
+  referenceId     String              @unique
+  description     String              @default("")
   transactionDate DateTime
   accountId       String
   userId          String
