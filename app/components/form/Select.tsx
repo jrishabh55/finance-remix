@@ -26,7 +26,7 @@ const Select: FC<SelectProps> = ({ error, id, name, label, options = [] }) => {
       <div className="w-full">
         <Listbox value={selected} onChange={setSelected}>
           <div className="relative mt-1">
-            <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-primary dark:bg-black rounded-lg shadow-input cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-secondary focus-visible:ring-offset-warning  focus-visible:ring-offset-2 focus-visible:border-error sm:text-sm">
+            <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-primary dark:bg-black rounded-lg shadow-input cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-secondary focus-visible:ring-offset-warning  focus-visible:ring-offset-2 focus-visible:border-error sm:text-sm">
               <span className="block truncate">{selected.name}</span>
               <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                 <SelectorIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
@@ -43,7 +43,7 @@ const Select: FC<SelectProps> = ({ error, id, name, label, options = [] }) => {
                     key={option.id}
                     className={({ active }) =>
                       `${active ? 'text-amber-900 bg-amber-100' : 'text-gray-900'}
-                          cursor-default select-none relative py-2 pl-10 pr-4`
+                          cursor-pointer select-none relative py-2 pl-10 pr-4`
                     }
                     disabled={option.disabled}
                     value={option}>
