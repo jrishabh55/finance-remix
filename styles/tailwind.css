@@ -19,3 +19,11 @@ body {
   @apply p-4;
   @apply text-error;
 }
+
+input[type='file'] {
+  @apply file:bg-black;
+  @apply file:border-background/10;
+  @apply file:cursor-pointer;
+  @apply file:rounded-lg;
+  @apply file:text-secondary;
+}
