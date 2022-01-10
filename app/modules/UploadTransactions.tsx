@@ -27,7 +27,7 @@ const UploadTransactions: FC<{ error?: string; accounts?: Account[] }> = ({ erro
       <div className="">
         <Form id="upload-transactions" method="post" encType="multipart/form-data">
           <Select name="account" label="Account" options={$accounts} />
-          <Input type="file" required label="Name" name="name" />
+          <Input type="file" required label="Name" name="transactionFile" />
           <Select name="bankName" label="Bank Name" options={accountOptions} />
           {error && (
             <div className="text-error text-center">
