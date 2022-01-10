@@ -51,7 +51,7 @@ export const action: ActionFunction = async ({ request }): Promise<ActionData | 
         if (err instanceof Prisma.PrismaClientKnownRequestError) {
           switch (err.code) {
             case 'P2002':
-              return { error: { error: 'Username or email already exists', message: err.message } };
+              return { error: { error: 'Account name already exists', message: err.message } };
           }
         }
         return { error: { error: 'Something went wrong', message: err?.message } };
