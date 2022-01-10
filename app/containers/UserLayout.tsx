@@ -1,4 +1,5 @@
 import { FC, useState } from 'react';
+import Footer from '~/components/Footer';
 import Header from '~/components/Header';
 import { Sidebar } from '~/components/Sidebar';
 
@@ -10,20 +11,9 @@ const UserLayout: FC = ({ children }) => {
       <Header onSidebarChange={() => setSidebar(!sidebar)} sidebar={sidebar} />
       <main className="flex flex-row flex-grow">
         {sidebar && <Sidebar />}
-        <section className="flex-grow nav-transition p-2">{children}</section>
-        <footer className="fixed bottom-0 right-1/2 translate-x-1/2">
-          <div className="flex justify-center">
-            <div className="text-center">
-              <p className="dark:text-secondary text-primary text-lg">
-                Made with <span className="text-red-600">❤</span> by{' '}
-                <a href="https://rishabhjain.dev" className="underline">
-                  Rishabh Jain
-                </a>
-              </p>
-            </div>
-          </div>
-        </footer>
+        <section className="flex-grow nav-transition p-2 pb-10">{children}</section>
       </main>
+      <Footer />
     </main>
   );
 };
