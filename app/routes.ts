@@ -23,11 +23,11 @@ const routes: RouteType[] = [
     child: [
       {
         name: 'Accounts',
-        to: '/account/list'
+        to: '/accounts'
       },
       {
         name: 'Add Account',
-        to: '/account/add'
+        to: '/accounts/add'
       }
     ]
   }

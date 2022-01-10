@@ -35,7 +35,7 @@ export const action: ActionFunction = async ({ request }): Promise<ActionData | 
     case 'POST': {
       /* handle "POST" */
       try {
-        const account = await db.user.update({
+        await db.user.update({
           where: { id: userId },
           data: {
             accounts: {
@@ -46,7 +46,7 @@ export const action: ActionFunction = async ({ request }): Promise<ActionData | 
           }
         });
 
-        return { account: account as any };
+        return redirect('/accounts');
       } catch (err: any) {
         if (err instanceof Prisma.PrismaClientKnownRequestError) {
           switch (err.code) {
