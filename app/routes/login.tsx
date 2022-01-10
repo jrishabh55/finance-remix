@@ -35,10 +35,11 @@ export const action: ActionFunction = async ({ request }): Promise<ActionData | 
           };
         }
 
-        const searchParams = new URL(request.url).searchParams;
+        const redirectTo = new URL(request.url).searchParams.get('redirectTo');
 
-        return createUserSession(user.id, searchParams.get('redirectTo') || '/');
+        return createUserSession(user.id, redirectTo ?? '/');
       } catch (err: any) {
+        console.error('error', err);
         return { error: { error: 'Something went wrong', message: err?.message } };
       }
     }
