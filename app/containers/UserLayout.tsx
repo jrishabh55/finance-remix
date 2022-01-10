@@ -4,7 +4,7 @@ import Header from '~/components/Header';
 import { Sidebar } from '~/components/Sidebar';
 
 const UserLayout: FC = ({ children }) => {
-  const [sidebar, setSidebar] = useState(true);
+  const [sidebar, setSidebar] = useState(false);
 
   return (
     <main className="flex flex-col min-h-screen w-screen max-w-full">

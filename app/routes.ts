@@ -30,6 +30,19 @@ const routes: RouteType[] = [
         to: '/accounts/add'
       }
     ]
+  },
+  {
+    name: 'Transaction',
+    child: [
+      {
+        name: 'Transactions',
+        to: '/transactions'
+      },
+      {
+        name: 'Upload Transactions',
+        to: '/transactions/upload'
+      }
+    ]
   }
 ];
 
