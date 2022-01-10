@@ -4,7 +4,7 @@ import { LoaderFunction, useCatch, useLoaderData } from 'remix';
 import Card from '~/components/Card';
 import Table from '~/components/Table';
 import UserLayout from '~/containers/UserLayout';
-import { db } from '~/utils/db.server';
+import { getAccounts } from '~/query/accounts.server';
 import { requireUserId } from '~/utils/session.server';
 
 type LoaderData = {
@@ -13,12 +13,7 @@ type LoaderData = {
 
 export const loader: LoaderFunction = async ({ request }): Promise<LoaderData> => {
   const userId = await requireUserId(request);
-  const accounts = await db.user.findMany({
-    where: { id: userId },
-    include: { accounts: true }
-  });
-
-  return { accounts: accounts[0].accounts };
+  return { accounts: await getAccounts(userId) };
 };
 
 const columns: TableColumn<LoaderData['accounts'][0]>[] = [
