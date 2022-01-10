@@ -66,7 +66,7 @@ function AddUserPage() {
   const actionData = useActionData<ActionData>();
   return (
     <UserLayout>
-      <div className="flex justify-center pt-40">
+      <div className="flex justify-center pt-10 md:pt-40">
         <AddAccount error={actionData?.error?.error} />
       </div>
     </UserLayout>

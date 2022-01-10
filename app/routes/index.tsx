@@ -60,14 +60,14 @@ export default function Index() {
         <div className="grid grid-cols-12 col-span-12">
           <Title>Dashboard</Title>
         </div>
-        <div className="col-span-2">
+        <div className="col-span-12 md:col-span-2">
           <Trends title="Yearly Comparison" data={yearly} small legend={false} />
         </div>
-        <div className="col-span-10"></div>
-        <div className="col-span-6">
+        <div className="md:col-span-10"></div>
+        <div className="col-span-12 md:col-span-6">
           <Trends title="Cash Flow" data={cashflow} />
         </div>
-        <div className="col-span-6">
+        <div className="col-span-12 md:col-span-6">
           <Trends title="Monthly Trends" stack={false} data={profitAndLoss} />
         </div>
       </div>
