@@ -1,12 +1,13 @@
+import { TransactionType } from '@prisma/client';
 import dayjs, { Dayjs } from 'dayjs';
 import xlsx from 'node-xlsx';
 
 export interface StatementUpload {
-  date: Dayjs;
+  transactionDate: Dayjs;
   description: string;
   referenceId: string;
   amount: number;
-  deposit: boolean;
+  type: TransactionType;
 }
 
 const parseHdfcFile = (
@@ -32,11 +33,11 @@ const parseHdfcFile = (
     }
 
     data.push({
-      date: date,
+      transactionDate: date,
       description: row[1],
       referenceId: row[2],
       amount: parseFloat(row[5] || row[4]),
-      deposit: !row[4]
+      type: row[4] ? 'DEPOSIT' : 'WITHDRAWAL'
     });
   }
 
