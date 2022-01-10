@@ -32,7 +32,7 @@ enum UserRoles {
 }
 
 model User {
-  id           Int           @id @default(autoincrement())
+  id           String        @id @default(cuid())
   name         String?
   username     String        @unique
   email        String        @unique
@@ -42,32 +42,42 @@ model User {
   transactions Transaction[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @default(now())
-  createdBy    Int           @default(0)
+  createdBy    String        @default("0")
   // creator      User          @relation("Creater", fields: [createdBy], references: [id], onDelete: NoAction, onUpdate: NoAction)
   // created      User[]        @relation("Creater")
 }
 
 model Account {
-  id           Int           @id @default(autoincrement())
+  id           String        @id @default(cuid())
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @default(now())
   name         String
   type         AccountType   @default(BANK)
-  userId       Int
+  userId       String
   user         User          @relation(fields: [userId], references: [id])
   transactions Transaction[]
 }
 
+model TransactionCategory {
+  id           String        @id @default(cuid())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now())
+  name         String        @unique
+  transactions Transaction[]
+}
+
 model Transaction {
-  id              Int             @id @default(autoincrement())
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @default(now())
-  amount          Int
-  type            TransactionType @default(DEPOSIT)
+  id              String              @id @default(cuid())
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @default(now())
+  amount          Float
+  type            TransactionType     @default(DEPOSIT)
   description     String?
   transactionDate DateTime
-  accountId       Int
-  userId          Int
-  account         Account         @relation(fields: [accountId], references: [id])
-  user            User            @relation(fields: [userId], references: [id])
+  accountId       String
+  userId          String
+  categoryId      String
+  account         Account             @relation(fields: [accountId], references: [id])
+  user            User                @relation(fields: [userId], references: [id])
+  category        TransactionCategory @relation(fields: [categoryId], references: [id])
 }
