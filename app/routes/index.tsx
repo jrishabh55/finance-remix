@@ -8,8 +8,8 @@ import { requireUserId } from '~/utils/session.server';
 
 type LoaderData = { cashflow: TrendsData; profitAndLoss: TrendsData; yearly: TrendsData };
 
-export const loader: LoaderFunction = ({ request }): LoaderData => {
-  requireUserId(request);
+export const loader: LoaderFunction = async ({ request }): Promise<LoaderData | Response> => {
+  await requireUserId(request);
   const cashflow: TrendsData = Array(12)
     .fill(0)
     .map((_, i) => {

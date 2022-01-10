@@ -1,8 +1,8 @@
 import { Prisma, User } from '@prisma/client';
-import { ActionFunction, redirect, useActionData, useCatch } from 'remix';
+import { ActionFunction, LoaderFunction, useActionData, useCatch } from 'remix';
 import UserLayout from '~/containers/UserLayout';
 import AddUser from '~/modules/AddUser';
-import { register } from '~/utils/session.server';
+import { register, requireUserId } from '~/utils/session.server';
 
 type ActionData = {
   user?: User;
@@ -12,7 +12,14 @@ type ActionData = {
   };
 };
 
-export const action: ActionFunction = async ({ request }): Promise<ActionData | Response> => {
+export const loader: LoaderFunction = async ({ request }) => {
+  return requireUserId(request);
+};
+
+export const action: ActionFunction = async ({
+  request
+}): Promise<ActionData | Response | null> => {
+  await requireUserId(request);
   const body = await request.formData();
   const userObj = {
     username: body.get('username')?.toString().toLowerCase() as string,
@@ -34,12 +41,14 @@ export const action: ActionFunction = async ({ request }): Promise<ActionData | 
               return { error: { error: 'Username or email already exists', message: err.message } };
           }
         }
+
+        // console.error(err);
         return { error: { error: 'Something went wrong', message: err?.message } };
       }
     }
-    default:
-      return redirect('/');
   }
+
+  return null;
 };
 
 function AddUserPage() {
