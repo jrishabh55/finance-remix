@@ -1,4 +1,5 @@
 import { Account, Prisma } from '@prisma/client';
+import dayjs from 'dayjs';
 import {
   ActionFunction,
   LoaderFunction,
@@ -10,11 +11,11 @@ import {
 import UserLayout from '~/containers/UserLayout';
 import UploadTransactions from '~/modules/UploadTransactions';
 import { getAccounts } from '~/query/accounts.server';
-import parseHdfcFile from '~/utils/parseHdfcFile.server';
+import { db } from '~/utils/db.server';
+import { StatementUpload } from '~/utils/parseHdfcFile';
 import { requireUserId } from '~/utils/session.server';
 
 type ActionData = {
-  account?: Account;
   error?: {
     message: string;
     error: string;
@@ -32,7 +33,7 @@ export const loader: LoaderFunction = async ({ request }): Promise<LoaderData> =
 };
 
 export const action: ActionFunction = async ({ request }): Promise<Response | any> => {
-  await requireUserId(request);
+  const userId = await requireUserId(request);
 
   // const uploadHandler = unstable_createMemoryUploadHandler({
   //   maxFileSize: 5_00_000
@@ -42,7 +43,7 @@ export const action: ActionFunction = async ({ request }): Promise<Response | an
   // const body = await unstable_parseMultipartFormData(request, uploadHandler);
   const accountId = body.get('account')?.toString();
   const bankName = body.get('bankName')?.toString();
-  const transactionFile: File = body.get('transactionFile') as File;
+  const transactionFile = body.get('transactionFile')?.toString();
 
   console.log({ file: typeof transactionFile, transactionFile });
 
@@ -56,21 +57,43 @@ export const action: ActionFunction = async ({ request }): Promise<Response | an
     };
   }
 
-  const transactions = parseHdfcFile(await transactionFile.arrayBuffer());
+  if (!transactionFile) {
+    return {
+      error: { error: 'File is required.', message: 'Transactions file is required.' }
+    };
+  }
 
-  console.log({ accountId, bankName, transactions });
+  // console.log({ accountId, bankName, transactions });
 
   switch (request.method) {
     case 'POST': {
       /* handle "POST" */
       try {
-        // await db.transaction.createMany({
-        //   data: transactions
-        // });
-        return { account: transactions as unknown as any };
+        const transactions: StatementUpload[] = JSON.parse(transactionFile);
+        const baseCategory = await db.transactionCategory.findFirst({
+          where: { name: 'Un-Categorized' }
+        });
+
+        console.log({ baseCategory });
+        if (!baseCategory) {
+          throw new Error('Un-Categorized category not found.');
+        }
+
+        await db.transaction.createMany({
+          data: transactions.map((transaction) => ({
+            ...transaction,
+            accountId,
+            userId,
+            categoryId: baseCategory.id,
+            transactionDate: dayjs(transaction.transactionDate).toISOString()
+          }))
+        });
+
+        return { baseCategory };
 
         // return redirect('/accounts');
       } catch (err: any) {
+        console.error(err);
         if (err instanceof Prisma.PrismaClientKnownRequestError) {
           switch (err.code) {
             case 'P2002':
@@ -91,8 +114,8 @@ function TransactionsUpload() {
 
   return (
     <UserLayout>
-      <div className="flex justify-center pt-40">
-        <UploadTransactions error={actionData?.error?.error} accounts={loaderData.accounts} />
+      <div className="flex justify-center md:mt-40 mt-5">
+        <UploadTransactions error={actionData?.error?.message} accounts={loaderData.accounts} />
       </div>
     </UserLayout>
   );
