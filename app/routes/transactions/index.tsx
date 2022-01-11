@@ -1,20 +1,48 @@
 import dayjs from 'dayjs';
 import { TableColumn } from 'react-data-table-component';
 import { PaginationChangeRowsPerPage } from 'react-data-table-component/dist/src/DataTable/types';
-import { LoaderFunction, useCatch, useLoaderData } from 'remix';
+import {
+  ActionFunction,
+  json,
+  LoaderFunction,
+  useActionData,
+  useCatch,
+  useLoaderData,
+  useSubmit
+} from 'remix';
 import Card from '~/components/Card';
 import Table from '~/components/Table';
 import UserLayout from '~/containers/UserLayout';
-import { getTransactions, GetTransactionsValue } from '~/query/transactions.server';
+import {
+  getTransactions,
+  getTransactionsCount,
+  GetTransactionsValue
+} from '~/query/transactions.server';
 import { requireUserId } from '~/utils/session.server';
 
 type LoaderData = {
   transactions: GetTransactionsValue[];
+  transactionsCount: number;
+};
+
+type ActionData = Pick<LoaderData, 'transactions'>;
+
+export const action: ActionFunction = async ({ request }): Promise<ActionData | Response> => {
+  const userId = await requireUserId(request);
+  const body = await request.formData();
+  const page: number = parseInt(body.get('page')?.toString() || '1');
+
+  const transactions = await getTransactions({ take: 10, skip: 10 * page, where: { userId } });
+  console.log('Action called on GET', request.method);
+
+  return json({ transactions });
 };
 
 export const loader: LoaderFunction = async ({ request }): Promise<LoaderData> => {
   const userId = await requireUserId(request);
-  return { transactions: await getTransactions({ userId: userId }) };
+  const transactions = await getTransactions({ where: { userId } });
+  const transactionsCount = await getTransactionsCount({ userId });
+  return { transactions, transactionsCount };
 };
 
 const columns: TableColumn<LoaderData['transactions'][0]>[] = [
@@ -59,18 +87,26 @@ const columns: TableColumn<LoaderData['transactions'][0]>[] = [
 ];
 
 function Transactions() {
-  const { transactions } = useLoaderData<LoaderData>();
+  const { transactions, transactionsCount } = useLoaderData<LoaderData>();
+  const actionData = useActionData<ActionData>();
+  const submit = useSubmit();
 
-  const handlePageChange: PaginationChangeRowsPerPage = (page) => {};
+  const handlePageChange: PaginationChangeRowsPerPage = (page) => {
+    const formData = new FormData();
+    formData.set('page', page + '');
+    submit(formData, { method: 'post' });
+  };
 
   return (
     <UserLayout>
       <Card title="Transactions" className="mx-auto">
         <Table
           columns={columns}
-          data={transactions}
+          data={actionData?.transactions || transactions}
           pagination={true}
           paginationPerPage={10}
+          paginationRowsPerPageOptions={[10]}
+          paginationTotalRows={transactionsCount}
           onChangePage={handlePageChange}
         />
       </Card>

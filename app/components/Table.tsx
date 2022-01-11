@@ -13,8 +13,8 @@ export const useDataTableTheme = () => {
       'customFinance',
       {
         text: {
-          primary: '#4ECCA3',
-          secondary: '#EEEEEE'
+          primary: '#EEEEEE',
+          secondary: '#4ECCA3'
         },
         background: {
           default: 'transparent'
