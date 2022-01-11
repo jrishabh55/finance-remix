@@ -12,7 +12,6 @@ import {
 } from 'remix';
 import Card from '~/components/Card';
 import Table from '~/components/Table';
-import UserLayout from '~/containers/UserLayout';
 import {
   getTransactions,
   getTransactionsCount,
@@ -98,19 +97,17 @@ function Transactions() {
   };
 
   return (
-    <UserLayout>
-      <Card title="Transactions" className="mx-auto">
-        <Table
-          columns={columns}
-          data={actionData?.transactions || transactions}
-          pagination={true}
-          paginationPerPage={10}
-          paginationRowsPerPageOptions={[10]}
-          paginationTotalRows={transactionsCount}
-          onChangePage={handlePageChange}
-        />
-      </Card>
-    </UserLayout>
+    <Card title="Transactions" className="mx-auto">
+      <Table
+        columns={columns}
+        data={actionData?.transactions || transactions}
+        pagination={true}
+        paginationPerPage={10}
+        paginationRowsPerPageOptions={[10]}
+        paginationTotalRows={transactionsCount}
+        onChangePage={handlePageChange}
+      />
+    </Card>
   );
 }
 

@@ -1,6 +1,5 @@
 import { Account, AccountType, Prisma } from '@prisma/client';
 import { ActionFunction, LoaderFunction, redirect, useActionData, useCatch } from 'remix';
-import UserLayout from '~/containers/UserLayout';
 import AddAccount from '~/modules/AddAccount';
 import { db } from '~/utils/db.server';
 import { requireUserId } from '~/utils/session.server';
@@ -65,11 +64,9 @@ export const action: ActionFunction = async ({ request }): Promise<ActionData | 
 function AddUserPage() {
   const actionData = useActionData<ActionData>();
   return (
-    <UserLayout>
-      <div className="flex justify-center pt-10 md:pt-40">
-        <AddAccount error={actionData?.error?.error} />
-      </div>
-    </UserLayout>
+    <div className="flex justify-center pt-10 md:pt-40">
+      <AddAccount error={actionData?.error?.error} />
+    </div>
   );
 }
 

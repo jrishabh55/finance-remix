@@ -1,14 +1,18 @@
 import {
   Links,
   LiveReload,
+  LoaderFunction,
   Meta,
   MetaFunction,
   Outlet,
   redirect,
   Scripts,
   ScrollRestoration,
-  useCatch
+  useCatch,
+  useLoaderData
 } from 'remix';
+import UnAuthenticatedLayout from './containers/UnAuthenticatedLayout';
+import UserLayout from './containers/UserLayout';
 import styles from './tailwind.css';
 
 export const meta: MetaFunction = () => {
@@ -19,7 +23,14 @@ export function links() {
   return [{ rel: 'stylesheet', href: styles }];
 }
 
+export const loader: LoaderFunction = ({ request }) => {
+  return { userLayout: request.url.includes('/login') === false };
+};
+
 export default function App() {
+  const { userLayout } = useLoaderData<{ userLayout: boolean }>();
+  const Layout = userLayout ? UserLayout : UnAuthenticatedLayout;
+
   return (
     <html lang="en">
       <head>
@@ -30,7 +41,9 @@ export default function App() {
       </head>
       <body className="dark">
         <div className="bg-primary/30 text-secondary dark:bg-background dark:text-secondary">
-          <Outlet />
+          <Layout>
+            <Outlet />
+          </Layout>
         </div>
         <ScrollRestoration />
         <Scripts />

@@ -3,7 +3,6 @@ import { TableColumn } from 'react-data-table-component';
 import { LoaderFunction, useCatch, useLoaderData } from 'remix';
 import Card from '~/components/Card';
 import Table from '~/components/Table';
-import UserLayout from '~/containers/UserLayout';
 import { getAccounts } from '~/query/accounts.server';
 import { requireUserId } from '~/utils/session.server';
 
@@ -37,11 +36,9 @@ function AddUserPage() {
   const { accounts } = useLoaderData<LoaderData>();
 
   return (
-    <UserLayout>
-      <Card title="Accounts" className="w-1/2 mx-auto">
-        <Table columns={columns} data={accounts} />
-      </Card>
-    </UserLayout>
+    <Card title="Accounts" className="w-1/2 mx-auto">
+      <Table columns={columns} data={accounts} />
+    </Card>
   );
 }
 

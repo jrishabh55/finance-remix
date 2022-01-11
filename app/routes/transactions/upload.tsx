@@ -8,7 +8,6 @@ import {
   useCatch,
   useLoaderData
 } from 'remix';
-import UserLayout from '~/containers/UserLayout';
 import UploadTransactions from '~/modules/UploadTransactions';
 import { getAccounts } from '~/query/accounts.server';
 import { db } from '~/utils/db.server';
@@ -113,11 +112,9 @@ function TransactionsUpload() {
   const loaderData = useLoaderData<LoaderData>();
 
   return (
-    <UserLayout>
-      <div className="flex justify-center md:mt-40 mt-5">
-        <UploadTransactions error={actionData?.error?.message} accounts={loaderData.accounts} />
-      </div>
-    </UserLayout>
+    <div className="flex justify-center md:mt-40 mt-5">
+      <UploadTransactions error={actionData?.error?.message} accounts={loaderData.accounts} />
+    </div>
   );
 }
 
