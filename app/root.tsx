@@ -46,6 +46,9 @@ export function CatchBoundary() {
     case 401: {
       return redirect('/login');
     }
+    case 404: {
+      throw new Error('404');
+    }
     default: {
       throw new Error(`Unhandled error: ${caught.status}`);
     }
@@ -53,6 +56,24 @@ export function CatchBoundary() {
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
-  console.error(error);
-  return <div className="error-container">{`There was an error . Sorry.`}</div>;
+  return (
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <Meta />
+        <Links />
+      </head>
+      <body className="dark">
+        <div className="flex bg-primary/30 text-secondary dark:bg-background dark:text-secondary h-screen w-screen items-center justify-center">
+          <span className="text-4xl text-error">
+            {error.message === '404' ? '404 Page not found' : 'Something went wrong.'}
+          </span>
+        </div>
+        <ScrollRestoration />
+        <Scripts />
+        {process.env.NODE_ENV === 'development' && <LiveReload />}
+      </body>
+    </html>
+  );
 }
