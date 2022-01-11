@@ -4,16 +4,26 @@ import { FC, Fragment } from 'react';
 import { Link } from 'remix';
 import routes, { RouteType } from '~/routes';
 
-export const Sidebar = () => {
+export const Sidebar: FC<{ show?: boolean }> = ({ show = true }) => {
   return (
-    <aside
-      className={`md:md:w-52 w-screen min-w-[100vw] md:min-w-[14rem] md:max-w-[14rem] pt-2 bg-primary/60 dark:bg-black flex-1 px-2 nav-transition`}>
-      <section className="space-y-4">
-        {routes.map((r) => (
-          <NavItem key={r.name} link={r} />
-        ))}
-      </section>
-    </aside>
+    <Transition
+      as={Fragment}
+      show={show}
+      enter="transition ease-out duration-100"
+      enterFrom="transform opacity-0 scale-95"
+      enterTo="transform opacity-100 scale-100"
+      leave="transition ease-in duration-75"
+      leaveFrom="transform opacity-100 scale-100"
+      leaveTo="transform opacity-0 scale-95">
+      <aside
+        className={`md:md:w-52 w-screen min-w-[100vw] md:min-w-[14rem] md:max-w-[14rem] pt-2 bg-primary/60 dark:bg-black flex-1 px-2 nav-transition`}>
+        <section className="space-y-4">
+          {routes.map((r) => (
+            <NavItem key={r.name} link={r} />
+          ))}
+        </section>
+      </aside>
+    </Transition>
   );
 };
 
