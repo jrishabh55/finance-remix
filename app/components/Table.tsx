@@ -45,7 +45,7 @@ function Table<T>(props: TableProps<T>) {
 
   return (
     <div id="finance-table">
-      <DataTable theme={theme} {...props} />
+      <DataTable className="w-full" theme={theme} {...props} />
     </div>
   );
 }
