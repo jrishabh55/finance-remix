@@ -12,11 +12,13 @@ const seedTransactionCategories = async () => {
     'Health',
     'Education',
     'Gifts',
-    'Other'
+    'Other',
+    'Un-Categorized'
   ];
 
   return prisma.transactionCategory.createMany({
-    data: transactionCategories.map((name) => ({ name }))
+    data: transactionCategories.map((name) => ({ name })),
+    skipDuplicates: true
   });
 };
 
