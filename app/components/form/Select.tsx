@@ -26,10 +26,10 @@ const Select: FC<SelectProps> = ({ error, id, name, label, options = [] }) => {
       <div className="w-full">
         <Listbox value={selected} onChange={setSelected}>
           <div className="relative mt-1">
-            <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-primary dark:bg-black rounded-lg shadow-input cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-secondary focus-visible:ring-offset-warning  focus-visible:ring-offset-2 focus-visible:border-error sm:text-sm">
+            <Listbox.Button className="relative w-full py-2 pl-3 text-left bg-primary dark:bg-black rounded-lg shadow-input cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-secondary focus-visible:ring-offset-warning  focus-visible:ring-offset-2 focus-visible:border-error sm:text-sm">
               <span className="block truncate">{selected.name}</span>
               <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                <SelectorIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
+                <SelectorIcon className="w-5 h-5" aria-hidden="true" />
               </span>
             </Listbox.Button>
             <Transition
