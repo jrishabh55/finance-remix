@@ -21,7 +21,7 @@ export type ButtonProps = DetailedHTMLProps<
 const Button: FC<ButtonProps> = ({ children, className, color = 'bg-primary', ...props }) => {
   return (
     <button
-      className={`p-2 shadow w-40 shadow-background rounded-lg dark:text-black ${color} ${
+      className={`p-2 shadow min-w-[10rem] shadow-background rounded-lg dark:text-black ${color} ${
         className ?? ''
       }`}
       {...props}>
