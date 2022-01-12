@@ -13,14 +13,12 @@ export type GetTransactionsValue = Transaction & {
 };
 
 export type GetTransactions = (
-  args?: Prisma.TransactionAggregateArgs
+  args?: Prisma.TransactionFindManyArgs
 ) => Promise<GetTransactionsValue[]>;
 
-export const getTransactions: GetTransactions = async (
-  arg: Prisma.TransactionAggregateArgs = {}
-) => {
+export const getTransactions: GetTransactions = async (arg = {}) => {
   const transactions = await db.transaction.findMany({
-    ...(arg as any),
+    ...arg,
     include: {
       category: {
         select: {
@@ -37,13 +35,11 @@ export const getTransactions: GetTransactions = async (
     }
   });
 
-  return (transactions as GetTransactionsValue[]) || [];
+  return transactions;
 };
 
-export const getTransactionsCount = async (where?: Prisma.TransactionAggregateArgs['where']) => {
-  const transactionsCount = await db.transaction.count({
-    where
-  });
+export const getTransactionsCount = async (arg?: Prisma.TransactionCountArgs) => {
+  const transactionsCount = await db.transaction.count(arg);
 
-  return transactionsCount || 0;
+  return transactionsCount;
 };

@@ -34,13 +34,13 @@ export const action: ActionFunction = async ({ request }): Promise<ActionData | 
   const transactions = await getTransactions({ take: 10, skip: 10 * page, where: { userId } });
   console.log('Action called on GET', request.method);
 
-  return json({ transactions });
+  return json<ActionData>({ transactions });
 };
 
 export const loader: LoaderFunction = async ({ request }): Promise<LoaderData> => {
   const userId = await requireUserId(request);
   const transactions = await getTransactions({ where: { userId } });
-  const transactionsCount = await getTransactionsCount({ userId });
+  const transactionsCount = await getTransactionsCount({ where: { userId } });
   return { transactions, transactionsCount };
 };
 

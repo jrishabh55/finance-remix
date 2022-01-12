@@ -8,11 +8,10 @@ export type GetUsersValue = User & {
   }[];
 };
 
-export type GetUsers = (args?: Prisma.UserAggregateArgs) => Promise<GetUsersValue[]>;
-
-export const getUsers: GetUsers = async (arg: Prisma.UserAggregateArgs = {}) => {
-  const Users = await db.user.findMany({
-    ...(arg as any),
+export type GetUsers = (arg?: Prisma.UserFindManyArgs) => Promise<GetUsersValue[]>;
+export const getUsers: GetUsers = async (arg = {}) => {
+  const users = await db.user.findMany({
+    ...arg,
     include: {
       accounts: {
         select: {
@@ -23,13 +22,10 @@ export const getUsers: GetUsers = async (arg: Prisma.UserAggregateArgs = {}) => 
     }
   });
 
-  return (Users as GetUsersValue[]) || [];
+  return users;
 };
 
-export const getUsersCount = async (where?: Prisma.UserAggregateArgs['where']) => {
-  const UsersCount = await db.user.count({
-    where
-  });
-
-  return UsersCount || 0;
+export const getUsersCount = async (arg?: Prisma.UserCountArgs) => {
+  const usersCount = await db.user.count(arg);
+  return usersCount;
 };
