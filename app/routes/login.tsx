@@ -37,7 +37,7 @@ export const action: ActionFunction = async ({ request }): Promise<ActionData | 
 
         const redirectTo = new URL(request.url).searchParams.get('redirectTo');
 
-        return createUserSession(user.id, redirectTo ?? '/');
+        return createUserSession(user, redirectTo ?? '/');
       } catch (err: any) {
         console.error('error', err);
         return { error: { error: 'Something went wrong', message: err?.message } };

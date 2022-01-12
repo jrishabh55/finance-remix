@@ -1,3 +1,4 @@
+import { User } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { createCookieSessionStorage, redirect } from 'remix';
 import { db } from './db.server';
@@ -58,6 +59,15 @@ export async function getUserId(request: Request) {
   return userId;
 }
 
+export async function getUserDetailsFromSession(request: Request) {
+  const session = await getUserSession(request);
+  const userId = session.get('userId');
+  const username = session.get('username');
+  const role = session.get('role');
+  if (!userId || typeof userId !== 'string') return null;
+  return { userId, username, role };
+}
+
 export async function requireUserId(
   request: Request,
   redirectTo: string = new URL(request.url).pathname
@@ -71,9 +81,12 @@ export async function requireUserId(
   return userId;
 }
 
-export async function createUserSession(userId: string, redirectTo: string = '/') {
+export async function createUserSession(user: User, redirectTo: string = '/') {
   const session = await storage.getSession();
-  session.set('userId', userId);
+  session.set('userId', user.id);
+  session.set('role', user.role);
+  session.set('username', user.username);
+
   return redirect(redirectTo ?? '/', {
     headers: {
       'Set-Cookie': await storage.commitSession(session)
