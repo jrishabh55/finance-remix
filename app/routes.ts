@@ -13,8 +13,12 @@ const routes: RouteType[] = [
     name: 'User',
     child: [
       {
+        name: 'Users',
+        to: '/users'
+      },
+      {
         name: 'Add User',
-        to: '/user/add'
+        to: '/users/add'
       }
     ]
   },
