@@ -9,7 +9,7 @@ import parseHdfcFile from '~/utils/parseHdfcFile';
 
 const accountOptions = [{ id: 'HDFC BANK', name: 'HDFC BANK' }];
 
-const UploadTransactions: FC<{ error?: string; accounts?: Account[] }> = ({ error, accounts }) => {
+const UploadTransactions: FC<{ error?: string; accounts: Account[] }> = ({ error, accounts }) => {
   const currentFile = useRef<File>();
   const submit = useSubmit();
   const transition = useTransition();
@@ -34,25 +34,24 @@ const UploadTransactions: FC<{ error?: string; accounts?: Account[] }> = ({ erro
     const formData = new FormData(form);
     formData.set('transactionFile', JSON.stringify(parsedFile));
 
-    submit(formData, { method: 'post' });
+    submit(formData, { method: 'post', action: '/transactions/upload' });
   };
 
   return (
     <Card
       title="Upload Transactions"
-      className="col-span-4 col-start-5"
       footer={
         <div className="flex justify-end">
           <Button
             type="submit"
             form="upload-transactions"
-            className="mr-5"
+            className="mr-10 ml-auto"
             disabled={transition.state === 'submitting'}>
             {transition.state === 'submitting' ? 'Uploading' : 'Upload'}
           </Button>
         </div>
       }>
-      <div className="">
+      <div className="md:w-[35vw] p-4 pb-0">
         <Form
           id="upload-transactions"
           method="post"

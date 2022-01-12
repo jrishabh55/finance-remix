@@ -1,23 +1,36 @@
-import { FC } from 'react';
-import { Form } from 'remix';
+import { FC, FormEventHandler } from 'react';
+import { Form, useSubmit, useTransition } from 'remix';
 import Button from '~/components/Button';
 import Card from '~/components/Card';
 import Input from '~/components/form/Input';
 
 const AddUser: FC<{ error?: string }> = ({ error }) => {
+  const submit = useSubmit();
+  const transition = useTransition();
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+
+    submit(form, { method: 'post', action: '/users/add' });
+  };
+
   return (
     <Card
       title="Add User"
-      className="col-span-4 col-start-5"
       footer={
         <div className="flex justify-end">
-          <Button type="submit" form="createUser" className="mr-5">
-            Add User
+          <Button
+            type="submit"
+            form="createUser"
+            className="mr-10 ml-auto"
+            disabled={transition.state === 'submitting'}>
+            {transition.state === 'submitting' ? 'Adding User' : 'Add User'}
           </Button>
         </div>
       }>
-      <div className="">
-        <Form id="createUser" method="post">
+      <div className="md:w-[35vw] p-4 pb-0">
+        <Form id="createUser" method="post" onSubmit={handleSubmit}>
           <Input autoComplete="none" required label="Username" name="username" />
           <Input autoComplete="none" required label="Name" name="name" />
           <Input autoComplete="none" required label="Email" name="email" type="email" />

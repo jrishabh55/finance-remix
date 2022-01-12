@@ -1,3 +1,4 @@
+import { Account } from '@prisma/client';
 import dayjs from 'dayjs';
 import { TableColumn } from 'react-data-table-component';
 import { PaginationChangeRowsPerPage } from 'react-data-table-component/dist/src/DataTable/types';
@@ -11,7 +12,10 @@ import {
   useSubmit
 } from 'remix';
 import Card from '~/components/Card';
+import Modal from '~/components/Modal';
 import Table from '~/components/Table';
+import UploadTransactions from '~/modules/UploadTransactions';
+import { getAccounts } from '~/query/accounts.server';
 import {
   getTransactions,
   getTransactionsCount,
@@ -22,6 +26,7 @@ import { requireUserId } from '~/utils/session.server';
 type LoaderData = {
   transactions: GetTransactionsValue[];
   transactionsCount: number;
+  accounts: Account[];
 };
 
 type ActionData = Pick<LoaderData, 'transactions'>;
@@ -40,8 +45,9 @@ export const action: ActionFunction = async ({ request }): Promise<ActionData | 
 export const loader: LoaderFunction = async ({ request }): Promise<LoaderData> => {
   const userId = await requireUserId(request);
   const transactions = await getTransactions({ where: { userId } });
+  const accounts = await getAccounts(userId);
   const transactionsCount = await getTransactionsCount({ where: { userId } });
-  return { transactions, transactionsCount };
+  return { transactions, transactionsCount, accounts };
 };
 
 const columns: TableColumn<LoaderData['transactions'][0]>[] = [
@@ -86,7 +92,7 @@ const columns: TableColumn<LoaderData['transactions'][0]>[] = [
 ];
 
 function Transactions() {
-  const { transactions, transactionsCount } = useLoaderData<LoaderData>();
+  const { transactions, transactionsCount, accounts } = useLoaderData<LoaderData>();
   const actionData = useActionData<ActionData>();
   const submit = useSubmit();
 
@@ -97,7 +103,14 @@ function Transactions() {
   };
 
   return (
-    <Card title="Transactions" className="mx-auto">
+    <Card
+      title="Transactions"
+      action={
+        <Modal title="Upload Transactions">
+          <UploadTransactions accounts={accounts} />
+        </Modal>
+      }
+      className="mx-auto">
       <Table
         columns={columns}
         data={actionData?.transactions || transactions}

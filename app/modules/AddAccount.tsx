@@ -1,6 +1,6 @@
 import { AccountType } from '@prisma/client';
-import { FC } from 'react';
-import { Form } from 'remix';
+import { FC, FormEventHandler } from 'react';
+import { Form, useSubmit, useTransition } from 'remix';
 import Button from '~/components/Button';
 import Card from '~/components/Card';
 import Input from '~/components/form/Input';
@@ -15,19 +15,30 @@ const accountOptions: { name: AccountType; id: AccountType }[] = [
 ];
 
 const AddAccount: FC<{ error?: string }> = ({ error }) => {
+  const submit = useSubmit();
+  const transition = useTransition();
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    submit(form, { method: 'post', action: '/accounts/add' });
+  };
   return (
     <Card
       title="Add Account"
-      className="col-span-4 col-start-5"
       footer={
         <div className="flex justify-end">
-          <Button type="submit" form="add-account" className="mr-5">
-            Add Account
+          <Button
+            type="submit"
+            form="add-account"
+            className="mr-10 ml-auto"
+            disabled={transition.state === 'submitting'}>
+            {transition.state === 'submitting' ? 'Adding Account' : 'Add Account'}
           </Button>
         </div>
       }>
-      <div className="">
-        <Form id="add-account" method="post">
+      <div className="md:w-[35vw] p-4 pb-0">
+        <Form id="add-account" method="post" onSubmit={handleSubmit}>
           <Input autoComplete="none" required label="Name" name="name" />
           <Select name="type" label="Account Type" options={accountOptions} />
           {error && (
