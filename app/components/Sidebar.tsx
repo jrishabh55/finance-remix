@@ -34,7 +34,9 @@ export const NavItem: FC<{ link: RouteType }> = ({ link }) => {
 
   return (
     <div className="text-center bg-primary dark:bg-black rounded-lg py-2 my-2 md:my-0 shadow shadow-background/10 dark:shadow-background/90 border-b border-background/10 dark:border-background">
-      <Link to={link.to ?? ''} className="block capitalize mt-1 no-underline hover:no-underline">
+      <Link
+        to={link.to ?? ''}
+        className="block capitalize mt-1 no-underline hover:text-primary hover:no-underline">
         {link.name}
       </Link>
     </div>
