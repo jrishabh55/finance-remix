@@ -6,8 +6,9 @@ export type CardProps = {
   bodyStyle?: CSSProperties;
   small?: boolean;
   bg?: boolean;
-  title?: string;
-  className: string;
+  title?: ReactNode;
+  action?: ReactNode;
+  className?: string;
   footer?: ReactNode;
 };
 
@@ -19,6 +20,7 @@ const Card: FC<CardProps> = ({
   className,
   style,
   small = false,
+  action,
   footer = null
 }) => {
   return (
@@ -27,9 +29,13 @@ const Card: FC<CardProps> = ({
         className ?? ''
       }`}
       style={style}>
-      {title && (
-        <header className={`border-b px-4 ${small ? 'py-2' : 'py-4'} border-background`}>
-          <Title>{title}</Title>
+      {(title || action) && (
+        <header
+          className={`flex justify-between items-center border-b px-4 ${
+            small ? 'py-2' : 'py-4'
+          } border-background`}>
+          {title && <Title>{title}</Title>}
+          <div>{action && action}</div>
         </header>
       )}
       <main className={small ? 'p-1 sm:p-1 w-full' : 'p-4 sm:p-6 w-full'} style={bodyStyle}>
