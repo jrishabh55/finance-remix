@@ -20,7 +20,7 @@ body {
   @apply text-error;
 }
 
-input[type='file'] {
+fieldset.finance-field input[type='file'] {
   @apply file:bg-black;
   @apply file:border-background/10;
   @apply file:cursor-pointer;
