@@ -1,28 +1,40 @@
-import dayjs from 'dayjs';
 import { LoaderFunction, useLoaderData } from 'remix';
 import Trends, { TrendsData } from '~/components/charts/Trends';
 import { Title } from '~/components/Typography';
-import { months, randomNumber } from '~/utils';
+import { monthlyTrends, yearlyTrends } from '~/query/charts.server';
+import { months } from '~/utils';
 import { requireUserId } from '~/utils/session.server';
 
 type LoaderData = { cashflow: TrendsData; profitAndLoss: TrendsData; yearly: TrendsData };
 
 export const loader: LoaderFunction = async ({ request }): Promise<LoaderData | Response> => {
   await requireUserId(request);
-  const cashflow: TrendsData = Array(12)
-    .fill(0)
-    .map((_, i) => {
-      const deposit = randomNumber(1, 200000);
-      const withdrawal = -randomNumber(1, 200000);
-      const average = deposit + withdrawal;
 
-      return {
-        name: months[11 - i],
-        deposit,
-        withdrawal,
-        average
-      };
-    });
+  const yearlyTrendsData = await yearlyTrends();
+  const monthlyTrendsData = await monthlyTrends();
+
+  const yearly: TrendsData = yearlyTrendsData.map(({ deposit, withdrawal, name }) => {
+    const average = deposit - withdrawal;
+
+    return {
+      name,
+      deposit,
+      withdrawal: withdrawal * -1,
+      average
+    };
+  });
+
+  const cashflow: TrendsData = monthlyTrendsData.map(({ deposit, withdrawal, name }) => {
+    const average = deposit - withdrawal;
+    const month: number = Number(name);
+
+    return {
+      name: months[month],
+      deposit,
+      withdrawal: withdrawal * -1,
+      average
+    };
+  });
 
   const profitAndLoss = cashflow.map((c) => {
     return {
@@ -31,21 +43,6 @@ export const loader: LoaderFunction = async ({ request }): Promise<LoaderData | 
       withdrawal: c.withdrawal * -1
     };
   });
-
-  const yearly: TrendsData = Array(2)
-    .fill(0)
-    .map((_, i) => {
-      const deposit = randomNumber(1000000, 5000000);
-      const withdrawal = -randomNumber(1000000, 5000000);
-      const average = deposit + withdrawal;
-
-      return {
-        name: dayjs().subtract(i, 'year').format('YYYY'),
-        deposit,
-        withdrawal,
-        average
-      };
-    });
 
   return { cashflow, profitAndLoss, yearly };
 };
@@ -63,7 +60,7 @@ export default function Index() {
       </div>
       <div className="md:col-span-10"></div>
       <div className="col-span-12 md:col-span-6">
-        <Trends title="Cash Flow" data={cashflow} />
+        <Trends title="Cashflow" data={cashflow} />
       </div>
       <div className="col-span-12 md:col-span-6">
         <Trends title="Monthly Trends" stack={false} data={profitAndLoss} />
