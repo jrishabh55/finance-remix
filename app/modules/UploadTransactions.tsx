@@ -1,11 +1,13 @@
 import { Account } from '@prisma/client';
+import { noop } from 'lodash';
 import { ChangeEventHandler, FC, FormEventHandler, useCallback, useMemo, useRef } from 'react';
 import { Form, useSubmit, useTransition } from 'remix';
 import Button from '~/components/Button';
 import Card from '~/components/Card';
 import Input from '~/components/form/Input';
 import Select from '~/components/form/Select';
-import parseHdfcFile from '~/utils/parsers/hdfc.parse';
+import hdfcTransactionsParser from '~/utils/parsers/hdfc.parse';
+import pnbTransactionsParser from '~/utils/parsers/pnb.parse';
 
 const accountOptions = [{ id: 'HDFC BANK', name: 'HDFC BANK' }];
 
@@ -29,7 +31,20 @@ const UploadTransactions: FC<{ error?: string; accounts: Account[] }> = ({ error
     const file = currentFile.current;
     if (!file) return;
 
-    const parsedFile = parseHdfcFile(await file.arrayBuffer());
+    let parser: Function = noop;
+    switch (form.bankName.value) {
+      case 'HDFC BANK':
+        parser = hdfcTransactionsParser;
+
+        break;
+      case 'PNB BANK':
+        parser = pnbTransactionsParser;
+        break;
+    }
+
+    if (parser === noop) return;
+
+    const parsedFile = parser(await file.arrayBuffer());
 
     const formData = new FormData(form);
     formData.set('transactionFile', JSON.stringify(parsedFile));
