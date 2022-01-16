@@ -11,7 +11,7 @@ import pnbTransactionsParser from '~/utils/parsers/pnb.parse';
 
 const accountOptions = [
   { id: 'HDFC BANK', name: 'HDFC BANK' },
-  { id: 'PNB', name: 'Punjab National Bank' }
+  { id: 'PNB', name: 'PUNJAB NATIONAL BANK' }
 ];
 
 const UploadTransactions: FC<{ error?: string; accounts: Account[] }> = ({ error, accounts }) => {
