@@ -1,5 +1,6 @@
 import { LoaderFunction, useLoaderData } from 'remix';
 import Trends, { TrendsData } from '~/components/charts/Trends';
+import { GridHeader } from '~/components/GridSection';
 import { Title } from '~/components/Typography';
 import { monthlyTrends, yearlyTrends } from '~/query/charts.server';
 import { months } from '~/utils';
@@ -51,20 +52,20 @@ export default function Index() {
   const { cashflow, profitAndLoss, yearly } = useLoaderData<LoaderData>();
 
   return (
-    <div className="grid grid-cols-12 md:grid-cols-12 gap-4">
-      <div className="grid grid-cols-12 col-span-12">
-        <Title>Dashboard</Title>
-      </div>
-      <div className="col-span-12 md:col-span-2">
+    <section className="grid grid-cols-12 md:grid-cols-12 gap-4">
+      <GridHeader title="Dashboard">
+        <Title type="page-header">mjisaudg</Title>
+      </GridHeader>
+      <article className="col-span-12 md:col-span-2">
         <Trends title="Yearly Comparison" data={yearly} small legend={false} />
-      </div>
-      <div className="md:col-span-10"></div>
-      <div className="col-span-12 md:col-span-6">
+      </article>
+      <article className="md:col-span-10"></article>
+      <article className="col-span-12 md:col-span-6">
         <Trends title="Cashflow" data={cashflow} />
-      </div>
-      <div className="col-span-12 md:col-span-6">
+      </article>
+      <article className="col-span-12 md:col-span-6">
         <Trends title="Monthly Trends" stack={false} data={profitAndLoss} />
-      </div>
-    </div>
+      </article>
+    </section>
   );
 }

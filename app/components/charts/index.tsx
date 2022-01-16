@@ -59,9 +59,9 @@ const Chart: FC<ChartProps> = ({
 
   return (
     <Card {...cardProps} title={title}>
-      <div style={wrapperStyle}>
+      <article style={wrapperStyle}>
         <Component {...settings} />
-      </div>
+      </article>
     </Card>
   );
 };
