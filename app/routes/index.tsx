@@ -1,7 +1,7 @@
 import { LoaderFunction, useLoaderData } from 'remix';
 import Trends, { TrendsData } from '~/components/charts/Trends';
-import { GridHeader } from '~/components/GridSection';
-import { Title } from '~/components/Typography';
+import { GridHeader } from '~/components/GridHeader';
+import { Title } from '~/lib/Typography';
 import { monthlyTrends, yearlyTrends } from '~/query/charts.server';
 import { months } from '~/utils';
 import { requireUserId } from '~/utils/session.server';

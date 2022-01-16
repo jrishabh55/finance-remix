@@ -2,10 +2,10 @@ import { Account } from '@prisma/client';
 import { noop } from 'lodash';
 import { ChangeEventHandler, FC, FormEventHandler, useCallback, useMemo, useRef } from 'react';
 import { Form, useSubmit, useTransition } from 'remix';
-import Button from '~/components/Button';
-import Card from '~/components/Card';
-import Input from '~/components/form/Input';
-import Select from '~/components/form/Select';
+import Button from '~/lib/Button';
+import Card from '~/lib/Card';
+import Input from '~/lib/form/Input';
+import Select from '~/lib/form/Select';
 import hdfcTransactionsParser from '~/utils/parsers/hdfc.parse';
 import pnbTransactionsParser from '~/utils/parsers/pnb.parse';
 

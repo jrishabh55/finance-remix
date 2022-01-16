@@ -10,8 +10,8 @@ import {
   useLoaderData,
   useSubmit
 } from 'remix';
-import Card from '~/components/Card';
-import Table from '~/components/Table';
+import Card from '~/lib/Card';
+import Table from '~/lib/Table';
 import { getUsers, getUsersCount, GetUsersValue } from '~/query/users.server';
 import { requireUserId } from '~/utils/session.server';
 

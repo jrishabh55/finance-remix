@@ -1,10 +1,10 @@
 import { AccountType } from '@prisma/client';
 import { FC, FormEventHandler } from 'react';
 import { Form, useSubmit, useTransition } from 'remix';
-import Button from '~/components/Button';
-import Card from '~/components/Card';
-import Input from '~/components/form/Input';
-import Select from '~/components/form/Select';
+import Button from '~/lib/Button';
+import Card from '~/lib/Card';
+import Input from '~/lib/form/Input';
+import Select from '~/lib/form/Select';
 
 const accountOptions: { name: AccountType; id: AccountType }[] = [
   { id: 'BANK', name: 'BANK' },

@@ -1,9 +1,9 @@
 import { Account } from '@prisma/client';
 import { TableColumn } from 'react-data-table-component';
 import { LoaderFunction, useCatch, useLoaderData } from 'remix';
-import Card from '~/components/Card';
-import Modal from '~/components/Modal';
-import Table from '~/components/Table';
+import Card from '~/lib/Card';
+import Modal from '~/lib/Modal';
+import Table from '~/lib/Table';
 import AddAccount from '~/modules/AddAccount';
 import { getAccounts } from '~/query/accounts.server';
 import { requireUserId } from '~/utils/session.server';

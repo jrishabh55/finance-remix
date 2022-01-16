@@ -11,9 +11,9 @@ import {
   useLoaderData,
   useSubmit
 } from 'remix';
-import Card from '~/components/Card';
-import Modal from '~/components/Modal';
-import Table from '~/components/Table';
+import Card from '~/lib/Card';
+import Modal from '~/lib/Modal';
+import Table from '~/lib/Table';
 import UploadTransactions from '~/modules/UploadTransactions';
 import { getAccounts } from '~/query/accounts.server';
 import {

@@ -1,8 +1,8 @@
 import { FC, FormEventHandler } from 'react';
 import { Form, useSubmit, useTransition } from 'remix';
-import Button from '~/components/Button';
-import Card from '~/components/Card';
-import Input from '~/components/form/Input';
+import Button from '~/lib/Button';
+import Card from '~/lib/Card';
+import Input from '~/lib/form/Input';
 
 const AddUser: FC<{ error?: string }> = ({ error }) => {
   const submit = useSubmit();

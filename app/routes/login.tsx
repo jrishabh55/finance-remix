@@ -1,9 +1,9 @@
 import { User } from '@prisma/client';
 import { ActionFunction, Form, redirect, useActionData, useCatch } from 'remix';
-import Button from '~/components/Button';
-import Card from '~/components/Card';
-import Input from '~/components/form/Input';
 import UnAuthenticatedLayout from '~/containers/UnAuthenticatedLayout';
+import Button from '~/lib/Button';
+import Card from '~/lib/Card';
+import Input from '~/lib/form/Input';
 import { createUserSession, login } from '~/utils/session.server';
 
 type ActionData = {

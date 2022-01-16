@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Title } from './Typography';
+import { Title } from '../lib/Typography';
 
 export type GridHeaderProps = {
   title?: string;
