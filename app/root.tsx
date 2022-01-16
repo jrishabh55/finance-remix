@@ -69,6 +69,7 @@ export function CatchBoundary() {
 }
 
 export function ErrorBoundary({ error }: { error: Error }) {
+  console.log(error);
   return (
     <html lang="en">
       <head>
