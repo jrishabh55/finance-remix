@@ -14,7 +14,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint --fix",
     "format": "prettier --write './app/**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
-    "postinstall": "remix setup node"
+    "postinstall": "remix setup node",
+    "test": "jest"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.2",
@@ -43,6 +44,7 @@
     "@tailwindcss/line-clamp": "^0.3.0",
     "@tailwindcss/typography": "^0.5.0",
     "@types/bcryptjs": "^2.4.2",
+    "@types/jest": "^27.4.0",
     "@types/lodash": "^4.14.178",
     "@types/numeral": "^2.0.2",
     "@types/react": "^17.0.38",
@@ -53,9 +55,11 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-react-app": "^7.0.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.4.7",
     "prettier": "^2.5.1",
     "prisma": "^3.7.0",
     "tailwindcss": "^3.0.11",
+    "ts-jest": "^27.1.3",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4"
   },
