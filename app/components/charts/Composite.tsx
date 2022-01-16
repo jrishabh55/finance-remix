@@ -10,6 +10,7 @@ import {
   Tooltip
 } from 'recharts';
 import colors, { chartColors } from '~/utils/color';
+import { formatNumber } from '~/utils/formatNumber';
 import Axis from './Axis';
 import CustomTooltip from './CustomTooltip';
 import { ChartProps } from './types';
@@ -41,7 +42,7 @@ const CompositeComponent: FC<ChartProps> = ({ containerProps, legend, series, ax
                   dataKey={s.dataKey as string}
                   position="top"
                   fill={colors.white}
-                  formatter={(value: number) => numeral(value).format('0.0a')}
+                  formatter={formatNumber}
                 />
               )}
             </Bar>

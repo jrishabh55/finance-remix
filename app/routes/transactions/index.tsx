@@ -21,6 +21,7 @@ import {
   getTransactionsCount,
   GetTransactionsValue
 } from '~/query/transactions.server';
+import { formatNumber } from '~/utils/formatNumber';
 import { requireUserId } from '~/utils/session.server';
 
 type LoaderData = {
@@ -80,7 +81,7 @@ const columns: TableColumn<LoaderData['transactions'][0]>[] = [
   },
   {
     name: 'Amount',
-    selector: (r) => r.amount,
+    cell: (r) => formatNumber(r.amount),
     sortable: true,
     width: '150px'
   },
