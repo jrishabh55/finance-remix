@@ -11,7 +11,7 @@ import {
 import UploadTransactions from '~/modules/UploadTransactions';
 import { getAccounts } from '~/query/accounts.server';
 import { db } from '~/utils/db.server';
-import { StatementUpload } from '~/utils/parseHdfcFile';
+import { StatementUpload } from '~/utils/parsers/hdfc.parse';
 import { requireUserId } from '~/utils/session.server';
 
 type ActionData = {

@@ -5,7 +5,7 @@ import Button from '~/components/Button';
 import Card from '~/components/Card';
 import Input from '~/components/form/Input';
 import Select from '~/components/form/Select';
-import parseHdfcFile from '~/utils/parseHdfcFile';
+import parseHdfcFile from '~/utils/parsers/hdfc.parse';
 
 const accountOptions = [{ id: 'HDFC BANK', name: 'HDFC BANK' }];
 
