@@ -5,3 +5,5 @@ node_modules
 /.netlify
 /app/tailwind.css
 .env
+coverage
+**.snapshot*
