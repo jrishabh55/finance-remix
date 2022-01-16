@@ -9,7 +9,10 @@ import Select from '~/components/form/Select';
 import hdfcTransactionsParser from '~/utils/parsers/hdfc.parse';
 import pnbTransactionsParser from '~/utils/parsers/pnb.parse';
 
-const accountOptions = [{ id: 'HDFC BANK', name: 'HDFC BANK' }];
+const accountOptions = [
+  { id: 'HDFC BANK', name: 'HDFC BANK' },
+  { id: 'PNB', name: 'Punjab National Bank' }
+];
 
 const UploadTransactions: FC<{ error?: string; accounts: Account[] }> = ({ error, accounts }) => {
   const currentFile = useRef<File>();
@@ -37,7 +40,7 @@ const UploadTransactions: FC<{ error?: string; accounts: Account[] }> = ({ error
         parser = hdfcTransactionsParser;
 
         break;
-      case 'PNB BANK':
+      case 'PNB':
         parser = pnbTransactionsParser;
         break;
     }
