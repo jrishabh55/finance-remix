@@ -78,6 +78,8 @@ model Transaction {
   accountId       String
   userId          String
   categoryId      String
+  note            String?
+  recipt          String?
   account         Account             @relation(fields: [accountId], references: [id])
   user            User                @relation(fields: [userId], references: [id])
   category        TransactionCategory @relation(fields: [categoryId], references: [id])
