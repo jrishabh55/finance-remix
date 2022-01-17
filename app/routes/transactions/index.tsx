@@ -1,16 +1,8 @@
 import { Account } from '@prisma/client';
 import dayjs from 'dayjs';
 import { TableColumn } from 'react-data-table-component';
-import { PaginationChangeRowsPerPage } from 'react-data-table-component/dist/src/DataTable/types';
-import {
-  ActionFunction,
-  json,
-  LoaderFunction,
-  useActionData,
-  useCatch,
-  useLoaderData,
-  useSubmit
-} from 'remix';
+import { PaginationChangePage } from 'react-data-table-component/dist/src/DataTable/types';
+import { LoaderFunction, useCatch, useFetcher, useLoaderData } from 'remix';
 import Card from '~/lib/Card';
 import Modal from '~/lib/Modal';
 import Table from '~/lib/Table';
@@ -30,24 +22,27 @@ type LoaderData = {
   accounts: Account[];
 };
 
-type ActionData = Pick<LoaderData, 'transactions'>;
-
-export const action: ActionFunction = async ({ request }): Promise<ActionData | Response> => {
-  const userId = await requireUserId(request);
-  const body = await request.formData();
-  const page: number = parseInt(body.get('page')?.toString() || '1');
-
-  const transactions = await getTransactions({ take: 10, skip: 10 * page, where: { userId } });
-  console.log('Action called on GET', request.method);
-
-  return json<ActionData>({ transactions });
-};
-
 export const loader: LoaderFunction = async ({ request }): Promise<LoaderData> => {
   const userId = await requireUserId(request);
-  const transactions = await getTransactions({ where: { userId }, take: 10 });
-  const accounts = await getAccounts(userId);
-  const transactionsCount = await getTransactionsCount({ where: { userId } });
+  let url = new URL(request.url);
+  let page = parseInt(url.searchParams.get('page') ?? '1', 10);
+
+  const transactionsPromise = getTransactions({
+    where: { userId },
+    take: 10,
+    skip: 10 * (page - 1)
+  });
+
+  if (page !== 1) {
+    return { transactions: await transactionsPromise, transactionsCount: -1, accounts: [] };
+  }
+
+  const [transactions, accounts, transactionsCount] = await Promise.all([
+    transactionsPromise,
+    getAccounts(userId),
+    getTransactionsCount({ where: { userId } })
+  ]);
+
   return { transactions, transactionsCount, accounts };
 };
 
@@ -93,15 +88,14 @@ const columns: TableColumn<LoaderData['transactions'][0]>[] = [
 ];
 
 function Transactions() {
-  const { transactions, transactionsCount, accounts } = useLoaderData<LoaderData>();
-  const actionData = useActionData<ActionData>();
-  const submit = useSubmit();
+  const loaderData = useLoaderData<LoaderData>();
+  const fetcher = useFetcher();
 
-  const handlePageChange: PaginationChangeRowsPerPage = (page) => {
-    const formData = new FormData();
-    formData.set('page', page + '');
+  const { transactionsCount, accounts } = loaderData;
+  const { transactions } = fetcher.data ?? loaderData;
 
-    submit(formData, { method: 'post', action: '/transactions' });
+  const handlePageChange: PaginationChangePage = (page) => {
+    fetcher.load(`/transactions?page=${page}`);
   };
 
   return (
@@ -115,9 +109,11 @@ function Transactions() {
       className="mx-auto">
       <Table
         columns={columns}
-        data={actionData?.transactions || transactions}
+        data={transactions}
         pagination={true}
+        paginationDefaultPage={1}
         paginationPerPage={10}
+        paginationServer={true}
         paginationRowsPerPageOptions={[10]}
         paginationTotalRows={transactionsCount}
         onChangePage={handlePageChange}
