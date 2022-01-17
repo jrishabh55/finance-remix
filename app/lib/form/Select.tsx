@@ -3,13 +3,15 @@ import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { FC, Fragment, useState } from 'react';
 import InputWrapper from './InputWrapper';
 
-export type SelectProps = {
-  options: {
-    id: number | string;
-    name: string;
-    disabled?: boolean;
-  }[];
+export type SelectOption = {
+  id: number | string;
+  name: string;
+  disabled?: boolean;
+};
 
+export type SelectProps = {
+  options: SelectOption[];
+  onChange?: (value: SelectProps['options'][0]) => void;
   id?: string;
   name: string;
   label?: string;
@@ -17,14 +19,19 @@ export type SelectProps = {
   error?: string;
 };
 
-const Select: FC<SelectProps> = ({ error, id, name, label, options = [] }) => {
+const Select: FC<SelectProps> = ({ error, id, name, label, options = [], onChange }) => {
   const [selected, setSelected] = useState(options[0]);
+
+  const handleChange = (option: SelectOption) => {
+    setSelected(option);
+    onChange?.(option);
+  };
 
   return (
     <InputWrapper id={id} name={name} label={label} error={error}>
       <input type="hidden" name={name} value={selected.id} />
       <div className="w-full">
-        <Listbox value={selected} onChange={setSelected}>
+        <Listbox value={selected} onChange={handleChange}>
           <div className="relative mt-1">
             <Listbox.Button className="relative w-full py-2 pl-3 text-left bg-primary dark:bg-black rounded-lg shadow-input cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-secondary focus-visible:ring-offset-warning  focus-visible:ring-offset-2 focus-visible:border-error sm:text-sm">
               <span className="block truncate">{selected.name}</span>
