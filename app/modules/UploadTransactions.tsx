@@ -1,20 +1,31 @@
 import { Account } from '@prisma/client';
 import { noop } from 'lodash';
-import { ChangeEventHandler, FC, FormEventHandler, useCallback, useMemo, useRef } from 'react';
-import { Form, useSubmit, useTransition } from 'remix';
+import {
+  ChangeEventHandler,
+  FC,
+  FormEventHandler,
+  useCallback,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
+import { Form, Link, useSubmit, useTransition } from 'remix';
 import Button from '~/lib/Button';
 import Card from '~/lib/Card';
 import Input from '~/lib/form/Input';
-import Select from '~/lib/form/Select';
+import Select, { SelectOption } from '~/lib/form/Select';
+import defaultTransactionsParser from '~/utils/parsers/default.parse';
 import hdfcTransactionsParser from '~/utils/parsers/hdfc.parse';
 import pnbTransactionsParser from '~/utils/parsers/pnb.parse';
 
-const accountOptions = [
+const accountOptions: SelectOption[] = [
+  { id: 'Default', name: 'DEFAULT STANDARD' },
   { id: 'HDFC BANK', name: 'HDFC BANK' },
   { id: 'PNB', name: 'PUNJAB NATIONAL BANK' }
 ];
 
 const UploadTransactions: FC<{ error?: string; accounts: Account[] }> = ({ error, accounts }) => {
+  const [bank, setBank] = useState(accountOptions[0]);
   const currentFile = useRef<File>();
   const submit = useSubmit();
   const transition = useTransition();
@@ -27,6 +38,10 @@ const UploadTransactions: FC<{ error?: string; accounts: Account[] }> = ({ error
   const handleTransactionFile: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
     currentFile.current = e.target.files?.[0];
   }, []);
+
+  const handleBankNameChange = (val: SelectOption) => {
+    setBank(val);
+  };
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -43,6 +58,11 @@ const UploadTransactions: FC<{ error?: string; accounts: Account[] }> = ({ error
       case 'PNB':
         parser = pnbTransactionsParser;
         break;
+      case 'Default':
+        parser = defaultTransactionsParser;
+        break;
+      default:
+        throw new Error('Invalid bank name');
     }
 
     if (parser === noop) return;
@@ -54,6 +74,8 @@ const UploadTransactions: FC<{ error?: string; accounts: Account[] }> = ({ error
 
     submit(formData, { method: 'post', action: '/transactions/upload' });
   };
+
+  console.log({ bank });
 
   return (
     <Card
@@ -83,7 +105,22 @@ const UploadTransactions: FC<{ error?: string; accounts: Account[] }> = ({ error
             name="transactionFile"
             onChange={handleTransactionFile}
           />
-          <Select name="bankName" label="Bank Name" options={accountOptions} />
+          <Select
+            name="bankName"
+            label="Bank Name"
+            options={accountOptions}
+            onChange={handleBankNameChange}
+          />
+          {bank.id === 'Default' && (
+            <div className="flex justify-end p-1">
+              <Link
+                className="ml-auto inline-block text-primary underline pointer p-2"
+                to="/assets/default_transactions_template.xls"
+                target="_blank">
+                Download Sample
+              </Link>
+            </div>
+          )}
           {error && (
             <div className="text-error text-center">
               <p>{error}</p>

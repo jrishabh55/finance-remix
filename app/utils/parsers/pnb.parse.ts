@@ -1,3 +1,4 @@
+import { TransactionType } from '@prisma/client';
 import dayjs from 'dayjs';
 import xlsx from 'node-xlsx';
 import { StatementUpload } from './types';
@@ -33,7 +34,7 @@ const pnbTransactionsParser = (
       description: row[9] ?? '',
       referenceId: row[3] ?? '',
       amount: parseFloat(row[7] || row[5]),
-      type: row[7] ? 'DEPOSIT' : 'WITHDRAWAL'
+      type: row[1] ? TransactionType.DEPOSIT : TransactionType.WITHDRAWAL
     });
   }
 
