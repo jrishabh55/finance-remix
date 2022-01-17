@@ -79,6 +79,7 @@ export const action: ActionFunction = async ({ request }): Promise<Response | an
         }
 
         await db.transaction.createMany({
+          skipDuplicates: true,
           data: transactions.map((transaction) => ({
             ...transaction,
             accountId,

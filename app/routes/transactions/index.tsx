@@ -45,7 +45,7 @@ export const action: ActionFunction = async ({ request }): Promise<ActionData | 
 
 export const loader: LoaderFunction = async ({ request }): Promise<LoaderData> => {
   const userId = await requireUserId(request);
-  const transactions = await getTransactions({ where: { userId } });
+  const transactions = await getTransactions({ where: { userId }, take: 10 });
   const accounts = await getAccounts(userId);
   const transactionsCount = await getTransactionsCount({ where: { userId } });
   return { transactions, transactionsCount, accounts };
@@ -100,7 +100,8 @@ function Transactions() {
   const handlePageChange: PaginationChangeRowsPerPage = (page) => {
     const formData = new FormData();
     formData.set('page', page + '');
-    submit(formData, { method: 'post' });
+
+    submit(formData, { method: 'post', action: '/transactions' });
   };
 
   return (

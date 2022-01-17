@@ -7,5 +7,8 @@
     "plugin:react/jsx-runtime",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["jsx-a11y"]
+  "plugins": ["jsx-a11y"],
+  "rules": {
+    "import/no-relative-parent-imports": "error"
+  }
 }

@@ -1,8 +1,8 @@
 import numeral from 'numeral';
 import { FC, useMemo } from 'react';
 import Chart from '~/lib/charts';
+import { Series } from '~/lib/charts/types';
 import { borderColors } from '~/utils/color';
-import { Series } from '../../lib/charts/types';
 
 export type TrendsData = { deposit: number; withdrawal: number; name: string }[];
 

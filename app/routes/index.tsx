@@ -1,4 +1,6 @@
 import { LoaderFunction, useLoaderData } from 'remix';
+import Cashflow, { CashflowData } from '~/components/charts/Cashflow';
+import MonthlyTrends from '~/components/charts/MonthlyTrends';
 import Trends, { TrendsData } from '~/components/charts/Trends';
 import { GridHeader } from '~/components/GridHeader';
 import { Title } from '~/lib/Typography';
@@ -6,7 +8,7 @@ import { monthlyTrends, yearlyTrends } from '~/query/charts.server';
 import { months } from '~/utils';
 import { requireUserId } from '~/utils/session.server';
 
-type LoaderData = { cashflow: TrendsData; profitAndLoss: TrendsData; yearly: TrendsData };
+type LoaderData = { cashflow: CashflowData; monthlyTrends: TrendsData; yearly: TrendsData };
 
 export const loader: LoaderFunction = async ({ request }): Promise<LoaderData | Response> => {
   await requireUserId(request);
@@ -25,31 +27,32 @@ export const loader: LoaderFunction = async ({ request }): Promise<LoaderData | 
     };
   });
 
-  const cashflow: TrendsData = monthlyTrendsData.map(({ deposit, withdrawal, name }) => {
+  const cashflow: CashflowData = monthlyTrendsData.map(({ deposit, withdrawal, name }) => {
     const average = deposit - withdrawal;
     const month: number = Number(name);
 
     return {
       name: months[month],
-      deposit,
-      withdrawal: withdrawal * -1,
-      average
+      inflow: deposit,
+      outflow: withdrawal * -1,
+      'net-change': average
     };
   });
 
-  const profitAndLoss = cashflow.map((c) => {
+  const parsedMonthlyTrendsData = monthlyTrendsData.map((c) => {
+    const month: number = Number(c.name);
     return {
-      name: c.name,
+      name: months[month],
       deposit: c.deposit,
-      withdrawal: c.withdrawal * -1
+      withdrawal: c.withdrawal
     };
   });
 
-  return { cashflow, profitAndLoss, yearly };
+  return { cashflow, monthlyTrends: parsedMonthlyTrendsData, yearly };
 };
 
 export default function Index() {
-  const { cashflow, profitAndLoss, yearly } = useLoaderData<LoaderData>();
+  const { cashflow, monthlyTrends, yearly } = useLoaderData<LoaderData>();
 
   return (
     <section className="grid grid-cols-12 md:grid-cols-12 gap-4">
@@ -59,12 +62,14 @@ export default function Index() {
       <article className="col-span-12 md:col-span-2">
         <Trends title="Yearly Comparison" data={yearly} small legend={false} />
       </article>
-      <article className="md:col-span-10"></article>
-      <article className="col-span-12 md:col-span-6">
-        <Trends title="Cashflow" data={cashflow} />
+      <article className="col-span-12 md:col-span-6 md:col-start-7">
+        <MonthlyTrends deposit={false} title="Expenses" data={monthlyTrends} />
       </article>
       <article className="col-span-12 md:col-span-6">
-        <Trends title="Monthly Trends" stack={false} data={profitAndLoss} />
+        <Cashflow title="Cashflow" data={cashflow} />
+      </article>
+      <article className="col-span-12 md:col-span-6">
+        <MonthlyTrends title="Monthly Trends" data={monthlyTrends} />
       </article>
     </section>
   );

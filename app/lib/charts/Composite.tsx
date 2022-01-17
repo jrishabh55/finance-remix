@@ -33,7 +33,7 @@ const CompositeComponent: FC<ChartProps> = ({ containerProps, legend, series, ax
           return (
             <Bar
               key={s.dataKey as string}
-              fill={chartColors[i] ?? chartColors[0]}
+              fill={s.color ?? chartColors[i] ?? chartColors[0]}
               barSize={30}
               {...s}
               ref={ref as any}>
@@ -52,7 +52,7 @@ const CompositeComponent: FC<ChartProps> = ({ containerProps, legend, series, ax
         return (
           <Line
             key={s.dataKey as string}
-            stroke={chartColors[i] ?? chartColors[0]}
+            stroke={s.color ?? chartColors[i] ?? chartColors[0]}
             type="monotone"
             {...s}
             ref={ref as any}>
