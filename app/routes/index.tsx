@@ -14,7 +14,7 @@ export const loader: LoaderFunction = async ({ request }): Promise<LoaderData | 
   await requireUserId(request);
 
   const yearlyTrendsData = await yearlyTrends();
-  const monthlyTrendsData = await monthlyTrends();
+  const monthlyTrendsData = await monthlyTrends({ year: new Date().getFullYear() });
 
   const yearly: TrendsData = yearlyTrendsData.map(({ deposit, withdrawal, name }) => {
     const average = deposit - withdrawal;

@@ -1,4 +1,4 @@
-import type { TransactionType } from '@prisma/client';
+import { TransactionType } from '@prisma/client';
 import { TrendsData } from '~/components/charts/Trends';
 import { db } from '~/utils/db.server';
 
@@ -12,11 +12,15 @@ export type FetchTrendsArg = {
   type: 'YEAR' | 'MONTH';
   accountIds?: string[];
   userId?: string;
+  month?: number;
+  year?: number;
 };
 
 export type TrendsArgs = Omit<FetchTrendsArg, 'type'>;
 
 export type GetTrends = (args?: TrendsArgs) => Promise<TrendsData>;
+export type YearlyTrends = (args?: Omit<TrendsArgs, 'month' | 'year'>) => Promise<TrendsData>;
+export type MonthlyTrends = (args?: Omit<TrendsArgs, 'month'>) => Promise<TrendsData>;
 
 export type FetchTrends = (fetchTrendsArgs: FetchTrendsArg) => Promise<TrendsData>;
 
@@ -34,21 +38,21 @@ const transformRawTrendsData = (rawTrendsData: RawTrendsData): TrendsData => {
       };
     }
 
-    const key = type === 'DEPOSIT' ? 'deposit' : 'withdrawal';
+    const key = type === TransactionType.DEPOSIT ? 'deposit' : 'withdrawal';
     trendsData[name][key] = amount;
   });
 
   return Object.values(trendsData);
 };
 
-export const yearlyTrends: GetTrends = async ({ accountIds = [], userId } = {}) => {
-  return fetchTrends({ type: 'YEAR', accountIds, userId });
+export const yearlyTrends: YearlyTrends = async (args = {}) => {
+  return fetchTrends({ ...args, type: 'YEAR' });
 };
-export const monthlyTrends: GetTrends = async ({ accountIds = [], userId } = {}) => {
-  return fetchTrends({ type: 'MONTH', accountIds, userId });
+export const monthlyTrends: MonthlyTrends = async (args = {}) => {
+  return fetchTrends({ ...args, type: 'MONTH' });
 };
 
-export const fetchTrends: FetchTrends = async ({ type, accountIds = [], userId }) => {
+export const fetchTrends: FetchTrends = async ({ type, accountIds = [], userId, year }) => {
   let where = '';
 
   if (accountIds.length > 0 || userId) {
@@ -59,6 +63,9 @@ export const fetchTrends: FetchTrends = async ({ type, accountIds = [], userId }
     }
     if (userId) {
       where += `${where.length > 0 ? ' AND ' : ''}userId = '${userId}'`;
+    }
+    if (year) {
+      where += `${where.length > 0 ? ' AND ' : ''}year = ${year}`;
     }
   }
 
