@@ -33,7 +33,7 @@ export const NavItem: FC<{ link: RouteType }> = ({ link }) => {
   }
 
   return (
-    <div className="text-center bg-primary dark:bg-black rounded-lg py-2 my-2 md:my-0 shadow shadow-background/10 dark:shadow-background/90 border-b border-background/10 dark:border-background">
+    <div className="text-left bg-primary dark:bg-black px-4 py-1 md:my-0 border-background/10 dark:border-background">
       <Link
         to={link.to ?? ''}
         className="block capitalize mt-1 no-underline hover:text-primary hover:no-underline">
@@ -48,11 +48,11 @@ const NavItemWithChild: FC<RouteType> = ({ name, child }) => {
     <article className="md:w-52 w-screen ">
       <Menu
         as="div"
-        className="relative text-center bg-primary dark:bg-black rounded-lg py-2 my-1 md:my-0 shadow shadow-background/10 dark:shadow-background/90 border-b border-background/10 dark:border-background">
+        className="relative text-left bg-primary dark:bg-black rounded-lg py-1 md:my-0 border-background/10 dark:border-background">
         <div>
-          <Menu.Button className="inline-flex justify-center md:w-52 w-screen  px-4 py-1 text-md font-medium text-secondary bg-black rounded-md hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary  focus-visible:ring-opacity-75">
+          <Menu.Button className="inline-flex justify-between md:w-52 w-screen  px-4 pt-1 pb-0 text-md font-medium text-secondary bg-black rounded-md hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary  focus-visible:ring-opacity-75">
             {name}
-            <ChevronDownIcon className="w-5 h-5 ml-2 -mr-1 hover:text-primary" aria-hidden="true" />
+            <ChevronDownIcon className="w-5 h-5 -mr-1 hover:text-primary" aria-hidden="true" />
           </Menu.Button>
         </div>
         <Transition
@@ -63,8 +63,8 @@ const NavItemWithChild: FC<RouteType> = ({ name, child }) => {
           leave="transition ease-in duration-75"
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95">
-          <Menu.Items className="absolute z-10 top-10 right-0 md:w-52 w-screen mt-2 origin-top-right bg-black divide-y divide-secondary rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="px-1 py-1 ">
+          <Menu.Items className="z-10 top-0 left-full md:w-52 w-screen mt-2 origin-top-right bg-black divide-y divide-secondary rounded-r-md focus:outline-none">
+            <div className="p-1 rounded-lg bg-background/20">
               {child?.map((link) => (
                 <Menu.Item key={link.to}>
                   {({ active }) => (
@@ -72,7 +72,7 @@ const NavItemWithChild: FC<RouteType> = ({ name, child }) => {
                       to={link.to}
                       className={`${
                         active ? 'text-primary' : ''
-                      } block capitalize mt-1 text-gray-800 hover:text-primary no-underline hover:no-underline rounded-b-lg shadow shadow-background p-2`}>
+                      }  p-2 pl-6 block capitalize mt-1 text-secondary/80 hover:text-primary no-underline hover:no-underline border-background/10 dark:border-background`}>
                       {link.name}
                     </Link>
                   )}
