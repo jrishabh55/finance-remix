@@ -32,7 +32,7 @@ const Modal: FC<ModalProps> = ({ children, title, onClose, onOpen }) => {
           className="fixed inset-0 bg-background/90 overflow-y-auto"
           onClose={closeModal}>
           <div className="px-4">
-            <div className="h-screen flex items-center justify-center" aria-hidden="true">
+            <div className="h-screen flex md:items-center justify-center" aria-hidden="true">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -55,7 +55,7 @@ const Modal: FC<ModalProps> = ({ children, title, onClose, onOpen }) => {
                 leave="ease-in duration-200"
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95">
-                <div className="flex rounded-lg border-primary border-solid z-[100]">
+                <div className="flex rounded-lg border-primary border-solid z-[100] translate-y-4 md:-translate-y-1/2">
                   {children}
                 </div>
               </Transition.Child>
