@@ -14,7 +14,7 @@ const CustomTooltip: FC<any> = (props) => {
 
   if (active && payload && payload.length) {
     return (
-      <div className="shadow dark:border-black p-2 rounded-lg bg-primary dark:bg-background/80">
+      <div className="rounded-lg bg-primary p-2 shadow dark:border-black dark:bg-background/80">
         {payload.map((val: any, i: number) => (
           <p key={i} className="label">
             <strong className="capitalize">{val.name}</strong>:

@@ -25,20 +25,20 @@ const Card: FC<CardProps> = ({
 }) => {
   return (
     <section
-      className={`${bg ? 'bg-primary/50 dark:bg-black shadow-xl rounded-lg' : ''} ${
+      className={`${bg ? 'rounded-lg bg-primary/50 shadow-xl dark:bg-black' : ''} ${
         className ?? ''
       }`}
       style={style}>
       {(title || action) && (
         <header
-          className={`flex justify-between items-center border-b px-4 ${
+          className={`flex items-center justify-between border-b px-4 ${
             small ? 'py-2' : 'py-4'
           } border-background`}>
           {title && <Title>{title}</Title>}
           <div>{action && action}</div>
         </header>
       )}
-      <main className={small ? 'p-1 sm:p-1 w-full' : 'p-4 sm:p-6 w-full'} style={bodyStyle}>
+      <main className={small ? 'w-full p-1 sm:p-1' : 'w-full p-4 sm:p-6'} style={bodyStyle}>
         {children}
       </main>
       {footer && <footer className={`px-4 ${small ? 'py-2' : 'py-4'}`}>{footer}</footer>}

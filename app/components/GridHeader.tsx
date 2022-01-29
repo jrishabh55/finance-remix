@@ -7,7 +7,7 @@ export type GridHeaderProps = {
 
 export const GridHeader: FC<GridHeaderProps> = ({ title, children }) => {
   return (
-    <header className="flex items-center justify-between col-span-12 bg-black p-4 rounded-lg">
+    <header className="col-span-12 flex items-center justify-between rounded-lg bg-black p-4">
       {title && <Title type="page-header">{title}</Title>}
       <div className="flex">{children}</div>
     </header>

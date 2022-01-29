@@ -37,12 +37,12 @@ const AddAccount: FC<{ error?: string }> = ({ error }) => {
           </Button>
         </div>
       }>
-      <div className="md:w-[35vw] p-4 pb-0">
+      <div className="p-4 pb-0 md:w-[35vw]">
         <Form id="add-account" method="post" onSubmit={handleSubmit}>
           <Input autoComplete="none" required label="Name" name="name" />
           <Select name="type" label="Account Type" options={accountOptions} />
           {error && (
-            <div className="text-error text-center">
+            <div className="text-center text-error">
               <p>{error}</p>
             </div>
           )}

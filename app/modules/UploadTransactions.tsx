@@ -91,7 +91,7 @@ const UploadTransactions: FC<{ error?: string; accounts: Account[] }> = ({ error
           </Button>
         </div>
       }>
-      <div className="md:w-[35vw] p-4 pb-0">
+      <div className="p-4 pb-0 md:w-[35vw]">
         <Form
           id="upload-transactions"
           method="post"
@@ -114,7 +114,7 @@ const UploadTransactions: FC<{ error?: string; accounts: Account[] }> = ({ error
           {bank.id === 'Default' && (
             <div className="flex justify-end p-1">
               <Link
-                className="ml-auto inline-block text-primary underline pointer p-2"
+                className="pointer ml-auto inline-block p-2 text-primary underline"
                 to="/assets/default_transactions_template.xls"
                 target="_blank">
                 Download Sample
@@ -122,7 +122,7 @@ const UploadTransactions: FC<{ error?: string; accounts: Account[] }> = ({ error
             </div>
           )}
           {error && (
-            <div className="text-error text-center">
+            <div className="text-center text-error">
               <p>{error}</p>
             </div>
           )}

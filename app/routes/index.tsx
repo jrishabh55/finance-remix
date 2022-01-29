@@ -55,7 +55,7 @@ export default function Index() {
   const { cashflow, monthlyTrends, yearly } = useLoaderData<LoaderData>();
 
   return (
-    <section className="grid grid-cols-12 md:grid-cols-12 gap-4">
+    <section className="grid grid-cols-12 gap-4 md:grid-cols-12">
       <GridHeader title="Dashboard">
         <Title type="page-header">mjisaudg</Title>
       </GridHeader>

@@ -53,7 +53,7 @@ export const action: ActionFunction = async ({
 function AddUserPage() {
   const actionData = useActionData<ActionData>();
   return (
-    <div className="flex justify-center md:pt-40 pt-10">
+    <div className="flex justify-center pt-10 md:pt-40">
       <AddUser error={actionData?.error?.error} />
     </div>
   );

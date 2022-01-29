@@ -33,10 +33,10 @@ const Select: FC<SelectProps> = ({ error, id, name, label, options = [], onChang
       <div className="w-full">
         <Listbox value={selected} onChange={handleChange}>
           <div className="relative mt-1">
-            <Listbox.Button className="relative w-full py-2 pl-3 text-left bg-primary dark:bg-black rounded-lg shadow-input cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-secondary focus-visible:ring-offset-warning  focus-visible:ring-offset-2 focus-visible:border-error sm:text-sm">
+            <Listbox.Button className="relative w-full cursor-pointer rounded-lg bg-primary py-2 pl-3 text-left shadow-input focus:outline-none focus-visible:border-error focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-opacity-75 focus-visible:ring-offset-2  focus-visible:ring-offset-warning dark:bg-black sm:text-sm">
               <span className="block truncate">{selected.name}</span>
-              <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                <SelectorIcon className="w-5 h-5" aria-hidden="true" />
+              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                <SelectorIcon className="h-5 w-5" aria-hidden="true" />
               </span>
             </Listbox.Button>
             <Transition
@@ -44,13 +44,13 @@ const Select: FC<SelectProps> = ({ error, id, name, label, options = [], onChang
               leave="transition ease-in duration-100"
               leaveFrom="opacity-100"
               leaveTo="opacity-0">
-              <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-black/90 rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-black/90 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {options.map((option) => (
                   <Listbox.Option
                     key={option.id}
                     className={({ active }) =>
                       `${active ? 'text-amber-900 bg-amber-100' : 'text-gray-900'}
-                          cursor-pointer select-none relative py-2 pl-10 pr-4`
+                          relative cursor-pointer select-none py-2 pl-10 pr-4`
                     }
                     disabled={option.disabled}
                     value={option}>
@@ -64,7 +64,7 @@ const Select: FC<SelectProps> = ({ error, id, name, label, options = [], onChang
                           <span
                             className={`${active ? 'text-amber-600' : 'text-amber-600'}
                                 absolute inset-y-0 left-0 flex items-center pl-3`}>
-                            <CheckIcon className="w-5 h-5" aria-hidden="true" />
+                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
                           </span>
                         ) : null}
                       </>

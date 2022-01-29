@@ -74,7 +74,7 @@ function AddUserPage() {
                 type="password"
               />
               {actionData?.error && (
-                <div className="text-error text-center">
+                <div className="text-center text-error">
                   <p>{actionData?.error?.error}</p>
                 </div>
               )}

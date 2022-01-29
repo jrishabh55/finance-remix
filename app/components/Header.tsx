@@ -6,13 +6,13 @@ const Header: FC<{ onSidebarChange: () => void; sidebar: boolean }> = ({
   sidebar
 }) => {
   return (
-    <header className="flex flex-col bg-primary dark:bg-black shadow-xl dark:border dark:border-black">
+    <header className="flex flex-col bg-primary shadow-xl dark:border dark:border-black dark:bg-black">
       <div className={`pt-2`}>
-        <div className="flex flex-col flex-1 max-w-xs w-full pt-5 pb-4 px-6 md:pt-0">
+        <div className="flex w-full max-w-xs flex-1 flex-col px-6 pt-5 pb-4 md:pt-0">
           <div className="flex items-center space-x-3 px-2">
             <Link
               to="/"
-              className="flex items-center no-underline font-bold text-2xl text-gray-800 hover:text-gray-600 focus:outline-none focus:text-gray-600">
+              className="text-gray-800 hover:text-gray-600 focus:text-gray-600 flex items-center text-2xl font-bold no-underline focus:outline-none">
               <img
                 src="https://avatars.githubusercontent.com/u/18290665?v=4"
                 alt="logo"
@@ -21,7 +21,7 @@ const Header: FC<{ onSidebarChange: () => void; sidebar: boolean }> = ({
               <span className="ml-2">Finance RJ</span>
             </Link>
             <button
-              className="flex items-center no-underline text-gray-500 hover:text-gray-700 focus:outline-none focus:text-gray-700"
+              className="text-gray-500 hover:text-gray-700 focus:text-gray-700 flex items-center no-underline focus:outline-none"
               onClick={onSidebarChange}>
               <svg
                 className="h-6 w-6"

@@ -9,11 +9,11 @@ type InputWrapperProps = {
 
 const InputWrapper: FC<InputWrapperProps> = ({ id, name, label, error, children }) => {
   return (
-    <fieldset className="finance-field p-2 flex items-center text-primary dark:text-secondary">
+    <fieldset className="finance-field flex items-center p-2 text-primary dark:text-secondary">
       {label && (
         <label
           htmlFor={id || name}
-          className="text-md m-2  text-primary mx-2 inline-block dark:text-secondary w-48">
+          className="text-md m-2  mx-2 inline-block w-48 text-primary dark:text-secondary">
           {label}
         </label>
       )}

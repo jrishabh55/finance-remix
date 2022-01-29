@@ -16,11 +16,11 @@ const UserLayout: FC = ({ children }) => {
   };
 
   return (
-    <main className="flex flex-col min-h-screen w-screen max-w-full">
+    <main className="flex min-h-screen w-screen max-w-full flex-col">
       <Header onSidebarChange={handleSidebarToggle} sidebar={sidebar} />
-      <main className="flex flex-row flex-grow">
+      <main className="flex flex-grow flex-row">
         {<Sidebar show={sidebar} />}
-        <section className="flex-grow nav-transition p-2 pb-10">{children}</section>
+        <section className="nav-transition flex-grow p-2 pb-10">{children}</section>
       </main>
       <Footer />
     </main>

@@ -45,7 +45,7 @@ function AddUserPage() {
           <AddAccount />
         </Modal>
       }
-      className="w-1/2 mx-auto">
+      className="mx-auto w-1/2">
       <Table columns={columns} data={accounts} />
     </Card>
   );

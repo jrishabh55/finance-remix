@@ -29,14 +29,14 @@ const AddUser: FC<{ error?: string }> = ({ error }) => {
           </Button>
         </div>
       }>
-      <div className="md:w-[35vw] p-4 pb-0">
+      <div className="p-4 pb-0 md:w-[35vw]">
         <Form id="createUser" method="post" onSubmit={handleSubmit}>
           <Input autoComplete="none" required label="Username" name="username" />
           <Input autoComplete="none" required label="Name" name="name" />
           <Input autoComplete="none" required label="Email" name="email" type="email" />
           <Input autoComplete="none" required label="Password" name="password" type="password" />
           {error && (
-            <div className="text-error text-center">
+            <div className="text-center text-error">
               <p>{error}</p>
             </div>
           )}

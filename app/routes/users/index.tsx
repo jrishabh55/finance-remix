@@ -48,7 +48,7 @@ const columns: TableColumn<LoaderData['users'][0]>[] = [
   {
     name: 'email',
     cell: (r) => (
-      <p className="text-ellipsis overflow-hidden" title={r.email}>
+      <p className="overflow-hidden text-ellipsis" title={r.email}>
         {r.email}
       </p>
     ),

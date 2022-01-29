@@ -79,7 +79,7 @@ export function ErrorBoundary({ error }: { error: Error }) {
         <Links />
       </head>
       <body className="dark">
-        <div className="flex bg-primary/30 text-secondary dark:bg-background dark:text-secondary h-screen w-screen items-center justify-center">
+        <div className="flex h-screen w-screen items-center justify-center bg-primary/30 text-secondary dark:bg-background dark:text-secondary">
           <span className="text-4xl text-error">
             {error.message === '404' ? '404 Page not found' : 'Something went wrong.'}
           </span>

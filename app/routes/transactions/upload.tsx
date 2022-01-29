@@ -113,7 +113,7 @@ function TransactionsUpload() {
   const loaderData = useLoaderData<LoaderData>();
 
   return (
-    <div className="flex justify-center md:mt-40 mt-5">
+    <div className="mt-5 flex justify-center md:mt-40">
       <UploadTransactions error={actionData?.error?.message} accounts={loaderData.accounts} />
     </div>
   );

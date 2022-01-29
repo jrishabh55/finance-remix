@@ -5,7 +5,7 @@ const Footer: FC = () => {
     <footer className="fixed bottom-0 right-1/2 translate-x-1/2">
       <div className="flex justify-center">
         <div className="text-center">
-          <p className="dark:text-secondary text-primary text-lg">
+          <p className="text-lg text-primary dark:text-secondary">
             Made with <span className="text-red-600">❤</span> by{' '}
             <a href="https://rishabhjain.dev" className="underline">
               Rishabh Jain

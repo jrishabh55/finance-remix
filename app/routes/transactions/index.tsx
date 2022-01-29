@@ -56,7 +56,7 @@ const columns: TableColumn<LoaderData['transactions'][0]>[] = [
   {
     name: 'Description',
     cell: (r) => (
-      <p className="text-ellipsis overflow-hidden whitespace-nowrap" title={r.description}>
+      <p className="overflow-hidden text-ellipsis whitespace-nowrap" title={r.description}>
         {r.description}
       </p>
     ),
