@@ -99,7 +99,7 @@ function Users() {
 
   return (
     <Card
-      title="Transactions"
+      title="Users"
       className="mx-auto w-9/12"
       action={
         <Modal title="Add User">
