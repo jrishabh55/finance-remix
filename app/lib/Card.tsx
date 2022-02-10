@@ -66,9 +66,9 @@ const Card: FC<CardProps> = ({
     <BaseDisclosure defaultOpen={defaultOpen}>
       {({ open }) => (
         <section
-          className={`${bg ? 'h-full rounded-lg bg-primary/50 shadow-xl dark:bg-black' : ''} ${
-            className ?? ''
-          }`}
+          className={`${
+            bg ? `${open && 'h-full'} rounded-lg bg-primary/50 shadow-xl dark:bg-black` : ''
+          } ${className ?? ''}`}
           style={style}>
           {collapsible && <Button className="w-full">{header(open)}</Button>}
           {!collapsible && header(true)}
