@@ -107,20 +107,20 @@ const UploadTransactions: FC<{ error?: string; accounts: Account[] }> = ({ error
           />
           <Select
             name="bankName"
-            label="Bank Name"
+            label="Transaction Type"
             options={accountOptions}
             onChange={handleBankNameChange}
           />
-          {bank.id === 'Default' && (
-            <div className="flex justify-end p-1">
+          <div className="flex h-12 justify-end p-1">
+            {bank.id === 'Default' && (
               <Link
                 className="pointer ml-auto inline-block p-2 text-primary underline"
                 to="/assets/default_transactions_template.xls"
                 target="_blank">
                 Download Sample
               </Link>
-            </div>
-          )}
+            )}
+          </div>
           {error && (
             <div className="text-center text-error">
               <p>{error}</p>
