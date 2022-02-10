@@ -21,7 +21,7 @@ export const loader: LoaderFunction = async ({ request }): Promise<LoaderData | 
 
   // const yearlyTrendsData = await yearlyTrends();
   const [monthlyTrendsData, accountsWithSum] = await Promise.all([
-    monthlyTrends({ year: new Date().getFullYear(), userId }),
+    monthlyTrends({ year: new Date().getFullYear() - 1, userId }),
     getAccountsWithSum(userId)
   ]);
 
@@ -65,27 +65,23 @@ export default function Index() {
 
   return (
     <section className="grid gap-4 md:grid-cols-12">
-      <article className="col-span-6">
-        <Card className="flex-grow" collapsible title="Accounts">
+      <article className="col-span-4">
+        <Card collapsible title="Accounts" className="mx-auto max-w-md">
           <AccountList accounts={accountsWithSum} />
         </Card>
       </article>
       {/* <article className="col-span-6">
           <Trends title="Yearly Comparison" data={yearly} small legend={false} />
         </article> */}
-      <article className="col-span-6">
+      <article className="col-span-8">
         <MonthlyTrends deposit={false} title="Expenses" data={monthlyTrends} />
       </article>
-      <article className="col-span-6">
-        <Card title="Working">Accounts</Card>
-      </article>
-      <article className="col-span-6">
+      <article className="col-span-4"></article>
+      <article className="col-span-8">
         <Cashflow title="Cashflow" data={cashflow} />
       </article>
-      <article className="col-span-6">
-        <Card title="Working">Accounts</Card>
-      </article>
-      <article className="col-span-6">
+      <article className="col-span-4"></article>
+      <article className="col-span-8">
         <MonthlyTrends title="Monthly Trends" data={monthlyTrends} />
       </article>
     </section>
