@@ -73,7 +73,9 @@ const Card: FC<CardProps> = ({
           {collapsible && <Button className="w-full">{header(open)}</Button>}
           {!collapsible && header(true)}
           <Panel
-            className={small ? 'w-full flex-grow p-1 sm:p-1' : ' w-full flex-grow p-4 sm:p-6'}
+            className={
+              small ? 'w-full flex-grow p-1 sm:p-1 sm:pb-0' : ' w-full flex-grow p-4 sm:p-6 sm:pb-0'
+            }
             style={bodyStyle}>
             {children}
           </Panel>
