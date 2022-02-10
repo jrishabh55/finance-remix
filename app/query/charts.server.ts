@@ -16,6 +16,8 @@ export type FetchTrendsArg = {
   year?: number;
 };
 
+const TRANSACTION_DATE_FIELD = 'transactionDate';
+
 export type TrendsArgs = Omit<FetchTrendsArg, 'type'>;
 
 export type YearlyTrends = (args?: Omit<TrendsArgs, 'month' | 'year'>) => Promise<TrendsData>;
@@ -63,12 +65,17 @@ export const fetchTrends: FetchTrends = async ({ type, accountIds = [], userId, 
     if (userId) {
       where += `${where !== 'WHERE ' ? ' AND ' : ''}userId = '${userId}'`;
     }
+    if (year) {
+      where += `${
+        where !== 'WHERE ' ? ' AND ' : ''
+      }${TRANSACTION_DATE_FIELD} BETWEEN '${year}-01-01' AND '${year}-12-31'`;
+    }
   }
 
   const data = await db.$queryRawUnsafe<RawTrendsData>(
     `
     SELECT
-      ${type}(transactionDate) AS name,
+      ${type}(${TRANSACTION_DATE_FIELD}) AS name,
       ROUND(SUM(amount), 2) AS amount,
       type
     FROM
