@@ -18,7 +18,6 @@ export type FetchTrendsArg = {
 
 export type TrendsArgs = Omit<FetchTrendsArg, 'type'>;
 
-export type GetTrends = (args?: TrendsArgs) => Promise<TrendsData>;
 export type YearlyTrends = (args?: Omit<TrendsArgs, 'month' | 'year'>) => Promise<TrendsData>;
 export type MonthlyTrends = (args?: Omit<TrendsArgs, 'month'>) => Promise<TrendsData>;
 
@@ -62,14 +61,12 @@ export const fetchTrends: FetchTrends = async ({ type, accountIds = [], userId, 
       where += `accountId IN (${accountIds.join(', ')})`;
     }
     if (userId) {
-      where += `${where.length > 0 ? ' AND ' : ''}userId = '${userId}'`;
-    }
-    if (year) {
-      where += `${where.length > 0 ? ' AND ' : ''}year = ${year}`;
+      where += `${where !== 'WHERE ' ? ' AND ' : ''}userId = '${userId}'`;
     }
   }
 
-  const data = await db.$queryRawUnsafe<RawTrendsData>(`
+  const data = await db.$queryRawUnsafe<RawTrendsData>(
+    `
     SELECT
       ${type}(transactionDate) AS name,
       ROUND(SUM(amount), 2) AS amount,
@@ -81,7 +78,8 @@ export const fetchTrends: FetchTrends = async ({ type, accountIds = [], userId, 
       name, type
     ORDER BY
       type ASC
-  `);
+  `
+  );
 
   return transformRawTrendsData(data);
 };
