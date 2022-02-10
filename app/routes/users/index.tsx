@@ -11,7 +11,9 @@ import {
   useSubmit
 } from 'remix';
 import Card from '~/lib/Card';
+import Modal from '~/lib/Modal';
 import Table from '~/lib/Table';
+import AddUser from '~/modules/AddUser';
 import { getUsers, getUsersCount, GetUsersValue } from '~/query/users.server';
 import { requireUserId } from '~/utils/session.server';
 
@@ -96,7 +98,14 @@ function Users() {
   };
 
   return (
-    <Card title="Transactions" className="mx-auto w-9/12">
+    <Card
+      title="Transactions"
+      className="mx-auto w-9/12"
+      action={
+        <Modal title="Add User">
+          <AddUser />
+        </Modal>
+      }>
       <Table
         columns={columns}
         data={actionData?.users || users}
