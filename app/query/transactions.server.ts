@@ -1,4 +1,4 @@
-import { Prisma, Transaction } from '@prisma/client';
+import { CurrencyCode, Prisma, Transaction } from '@prisma/client';
 import { db } from '~/utils/db.server';
 
 export type GetTransactionsValue = Transaction & {
@@ -9,6 +9,7 @@ export type GetTransactionsValue = Transaction & {
   account: {
     id: string;
     name: string;
+    currencyCode: CurrencyCode;
   };
 };
 
@@ -29,7 +30,8 @@ export const getTransactions: GetTransactions = async (arg = {}) => {
       account: {
         select: {
           id: true,
-          name: true
+          name: true,
+          currencyCode: true
         }
       }
     }

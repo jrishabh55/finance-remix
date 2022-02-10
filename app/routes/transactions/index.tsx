@@ -13,6 +13,7 @@ import {
   getTransactionsCount,
   GetTransactionsValue
 } from '~/query/transactions.server';
+import { currencyCodeMap } from '~/utils/constants/currency';
 import { formatNumber } from '~/utils/formatNumber';
 import { requireUserId } from '~/utils/session.server';
 
@@ -76,7 +77,7 @@ const columns: TableColumn<LoaderData['transactions'][0]>[] = [
   },
   {
     name: 'Amount',
-    cell: (r) => formatNumber(r.amount),
+    cell: (r) => formatNumber(r.amount, { currencyCode: currencyCodeMap[r.account.currencyCode] }),
     sortable: true,
     width: '150px'
   },

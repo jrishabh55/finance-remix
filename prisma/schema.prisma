@@ -31,6 +31,18 @@ enum UserRoles {
   USER
 }
 
+enum CurrencyCode {
+  INR
+  USD
+  EUR
+  GBP
+  AUD
+  CAD
+  NZD
+  CHF
+  JPY
+}
+
 model User {
   id           String        @id @default(cuid())
   name         String
@@ -56,6 +68,7 @@ model Account {
   userId       String
   user         User          @relation(fields: [userId], references: [id])
   transactions Transaction[]
+  currencyCode CurrencyCode  @default(INR)
 }
 
 model TransactionCategory {
