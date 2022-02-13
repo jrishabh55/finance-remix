@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import Chart from '~/lib/charts';
-import { Axis, Series } from '~/lib/charts/types';
+import Chart from '~/lib/chart';
+import { Axis, Series } from '~/lib/chart/types';
 import { borderColors } from '~/utils/color';
 import { formatNumber } from '~/utils/formatNumber';
 

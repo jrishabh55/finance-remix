@@ -90,3 +90,37 @@ export const fetchTrends: FetchTrends = async ({ type, accountIds = [], userId, 
 
   return transformRawTrendsData(data);
 };
+
+export type FetchExpenseSumByCategoriesArgs = {
+  userId?: string;
+  accountId?: string[];
+};
+
+export const fetchExpenseSumByCategories = async ({
+  userId,
+  accountId
+}: FetchExpenseSumByCategoriesArgs = {}) => {
+  const transactionSumProm = db.transaction.groupBy({
+    by: ['categoryId'],
+    where: {
+      type: TransactionType.WITHDRAWAL,
+      userId,
+      OR: accountId?.map((accID) => ({ accountId: accID }))
+    },
+    _sum: {
+      amount: true
+    }
+  });
+
+  const categoryProm = db.transactionCategory.findMany({ select: { name: true, id: true } });
+
+  const [transactionsSum, categories] = await Promise.all([transactionSumProm, categoryProm]);
+
+  const categoriesWithSum = categories.map((category) => {
+    const sum = transactionsSum.find((t) => t.categoryId === category.id)?._sum?.amount ?? 0;
+    return { ...category, sum };
+  });
+
+  return categoriesWithSum;
+};
+export type FetchExpenseSumByCategories = typeof fetchExpenseSumByCategories;
