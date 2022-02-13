@@ -2,6 +2,7 @@ import merge from 'lodash/merge';
 import { CSSProperties, FC, memo, useMemo } from 'react';
 import Card from '../Card';
 import Composite from './Composite';
+import Pie from './Pie';
 import { ChartProps } from './types';
 
 const wrapperStyle: CSSProperties = {
@@ -40,7 +41,8 @@ const defaultSettings: Partial<ChartProps> & Record<string, any> = {
 };
 
 const ComponentMap = {
-  Composite: Composite
+  Composite: Composite,
+  pie: Pie
 };
 
 const Chart: FC<ChartProps> = ({

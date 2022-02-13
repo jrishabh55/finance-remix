@@ -3,6 +3,7 @@ import {
   BarProps as BarPropsOriginal,
   LegendProps as LegendPropsOriginal,
   LineProps as LinePropsOriginal,
+  PieProps as PiePropsOriginal,
   ResponsiveContainer,
   XAxisProps as XAxisPropsOriginal,
   YAxisProps as YAxisPropsOriginal
@@ -14,14 +15,15 @@ import { CardProps } from '../Card';
 export * from 'recharts';
 export { default } from 'recharts';
 
-export type ChartType = 'Composite'; // 'line' | 'pie' | 'doughnut' | 'polarArea' | 'radar';
+export type ChartType = 'Composite' | 'pie'; // 'line' | 'doughnut' | 'polarArea' | 'radar';
 
 export type ChartData = CategoricalChartProps['data'];
 export type BarProps = BarPropsOriginal & { sType: 'bar'; labelList?: boolean };
 export type LineProps = LinePropsOriginal & { sType: 'line'; labelList?: boolean };
+export type PieProps = PiePropsOriginal & { sType: 'pie'; labelList?: boolean };
 export type XAxisProps = XAxisPropsOriginal & { aType: 'x' };
 export type YAxisProps = YAxisPropsOriginal & { aType: 'y' };
-export type Series = LineProps | BarProps;
+export type Series = LineProps | BarProps | PieProps;
 export type Axis = XAxisProps | YAxisProps;
 
 export type Legend = LegendPropsOriginal & { show: boolean };
@@ -34,7 +36,7 @@ export interface ChartProps extends CategoricalChartProps, CategoricalChartOptio
   type?: ChartType;
   containerProps?: typeof ResponsiveContainer;
   series: Series[];
-  axis: Axis[];
+  axis?: Axis[];
   legend?: Legend;
 }
 

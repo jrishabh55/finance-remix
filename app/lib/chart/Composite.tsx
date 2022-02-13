@@ -49,23 +49,27 @@ const CompositeComponent: FC<ChartProps> = ({ containerProps, legend, series, ax
           );
         }
 
-        return (
-          <Line
-            key={s.dataKey as string}
-            stroke={s.color ?? chartColors[i] ?? chartColors[0]}
-            type="monotone"
-            {...s}
-            ref={ref as any}>
-            {labelList && (
-              <LabelList
-                dataKey={s.dataKey as string}
-                position="top"
-                fill={colors.white}
-                formatter={(value: number) => numeral(value).format('0.0a')}
-              />
-            )}
-          </Line>
-        );
+        if (s.sType === 'line') {
+          return (
+            <Line
+              key={s.dataKey as string}
+              stroke={s.color ?? chartColors[i] ?? chartColors[0]}
+              type="monotone"
+              {...s}
+              ref={ref as any}>
+              {labelList && (
+                <LabelList
+                  dataKey={s.dataKey as string}
+                  position="top"
+                  fill={colors.white}
+                  formatter={(value: number) => numeral(value).format('0.0a')}
+                />
+              )}
+            </Line>
+          );
+        }
+
+        return null;
       })}
     </ComposedChart>
   </ResponsiveContainer>
