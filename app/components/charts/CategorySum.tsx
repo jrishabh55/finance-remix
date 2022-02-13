@@ -11,7 +11,7 @@ export type CategorySumProps = {
 const CategorySum: FC<CategorySumProps> = ({ data, cardProps }) => {
   return (
     <Chart
-      title="Cashflow"
+      title="Categorical Expenses"
       type="pie"
       data={data}
       id="category-sum"
