@@ -1,5 +1,6 @@
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
+import clsx from 'clsx';
 import { FC, Fragment, useState } from 'react';
 import InputWrapper from './InputWrapper';
 
@@ -30,12 +31,12 @@ const Select: FC<SelectProps> = ({ error, id, name, label, options = [], onChang
   return (
     <InputWrapper id={id} name={name} label={label} error={error}>
       <input type="hidden" name={name} value={selected.id} />
-      <div className="w-full">
+      <div className="flex-grow p-2">
         <Listbox value={selected} onChange={handleChange}>
           <div className="relative mt-1">
-            <Listbox.Button className="relative w-full cursor-pointer rounded-lg bg-primary py-2 pl-3 text-left shadow-input focus:outline-none focus-visible:border-error focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-opacity-75 focus-visible:ring-offset-2  focus-visible:ring-offset-warning dark:bg-black sm:text-sm">
+            <Listbox.Button className="relative z-0 w-full cursor-pointer rounded-lg bg-primary py-2 pl-3 text-left shadow-input focus:outline-none dark:bg-black sm:text-sm">
               <span className="block truncate">{selected.name}</span>
-              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+              <span className="pointer-events-none absolute inset-y-0 right-0 z-0 flex items-center pr-2">
                 <SelectorIcon className="h-5 w-5" aria-hidden="true" />
               </span>
             </Listbox.Button>
@@ -44,13 +45,15 @@ const Select: FC<SelectProps> = ({ error, id, name, label, options = [], onChang
               leave="transition ease-in duration-100"
               leaveFrom="opacity-100"
               leaveTo="opacity-0">
-              <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-black/90 py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <Listbox.Options className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md bg-black py-1 text-base shadow-lg focus:outline-none sm:text-sm">
                 {options.map((option) => (
                   <Listbox.Option
                     key={option.id}
                     className={({ active }) =>
-                      `${active ? 'text-amber-900 bg-amber-100' : 'text-gray-900'}
-                          relative cursor-pointer select-none py-2 pl-10 pr-4`
+                      clsx('relative z-40 cursor-pointer select-none py-2 pl-10 pr-4', {
+                        'text-primary': active,
+                        'text-secondary': !active
+                      })
                     }
                     disabled={option.disabled}
                     value={option}>

@@ -14,7 +14,7 @@ const Input: FC<InputProps> = ({ className, error, id, name, label, ...props }) 
         id={id || name}
         name={name}
         {...props}
-        className={`mx-2 w-full cursor-pointer rounded-lg border-none bg-black p-1 shadow-input outline-none  ring-0 ring-black ring-opacity-5 focus:outline-none ${
+        className={`mx-2 flex-grow cursor-pointer rounded-lg border-none bg-black p-1 shadow-input outline-none ${
           className ?? ''
         }`}
       />

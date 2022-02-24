@@ -13,7 +13,7 @@ const InputWrapper: FC<InputWrapperProps> = ({ id, name, label, error, children 
       {label && (
         <label
           htmlFor={id || name}
-          className="text-md m-2  mx-2 inline-block w-48 text-primary dark:text-secondary">
+          className="text-md m-2 mx-2 inline-block w-44 text-primary dark:text-secondary">
           {label}
         </label>
       )}
