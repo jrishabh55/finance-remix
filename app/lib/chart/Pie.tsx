@@ -107,8 +107,8 @@ const PieChart: FC<ChartProps> = ({ containerProps, legend, series, axis, data }
                 data={data}
                 cx="50%"
                 cy="50%"
-                innerRadius={60}
-                outerRadius={80}
+                innerRadius={70}
+                outerRadius={90}
                 {...s}
                 activeIndex={activeIndex}
                 activeShape={renderActiveShape}
