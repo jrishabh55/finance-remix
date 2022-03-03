@@ -17,6 +17,7 @@ import Select, { SelectOption } from '~/lib/form/Select';
 import defaultTransactionsParser from '~/utils/parsers/default.parse';
 import hdfcTransactionsParser from '~/utils/parsers/hdfc.parse';
 import pnbTransactionsParser from '~/utils/parsers/pnb.parse';
+import { StatementUpload } from '~/utils/parsers/types';
 
 const accountOptions: SelectOption[] = [
   { id: 'Default', name: 'DEFAULT STANDARD' },
@@ -67,7 +68,9 @@ const UploadTransactions: FC<{ error?: string; accounts: Account[] }> = ({ error
 
     if (parser === noop) return;
 
-    const parsedFile = parser(await file.arrayBuffer());
+    const parsedFile: StatementUpload[] = parser(await file.arrayBuffer());
+
+    console.log({ parsedFile: parsedFile.filter((pf) => pf.type === 'WITHDRAWAL') });
 
     const formData = new FormData(form);
     formData.set('transactionFile', JSON.stringify(parsedFile));
@@ -91,7 +94,7 @@ const UploadTransactions: FC<{ error?: string; accounts: Account[] }> = ({ error
           </Button>
         </div>
       }>
-      <div className="p-4 pb-0 md:w-[35vw]">
+      <div className="max-w-full p-4 pb-0 md:w-[35vw]">
         <Form
           id="upload-transactions"
           method="post"
