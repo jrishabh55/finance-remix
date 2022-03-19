@@ -23,6 +23,7 @@ const AddAccount: FC<{ error?: string }> = ({ error }) => {
     const form = e.currentTarget;
     submit(form, { method: 'post', action: '/accounts/add' });
   };
+
   return (
     <Card
       title="Add Account"
@@ -37,7 +38,7 @@ const AddAccount: FC<{ error?: string }> = ({ error }) => {
           </Button>
         </div>
       }>
-      <div className="p-4 pb-0 md:w-[35vw]">
+      <div className="max-w-full p-4 pb-0 md:w-[35vw]">
         <Form id="add-account" method="post" onSubmit={handleSubmit}>
           <Input autoComplete="none" required label="Name" name="name" />
           <Select name="type" label="Account Type" options={accountOptions} />

@@ -1,4 +1,4 @@
-import { User } from '@prisma/client';
+import { User, UserRoles } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { createCookieSessionStorage, redirect } from 'remix';
 import { db } from './db.server';
@@ -8,6 +8,7 @@ type UserForm = {
   password: string;
   name: string;
   email: string;
+  role: UserRoles;
 };
 
 type LoginForm = Omit<UserForm, 'email' | 'name'>;

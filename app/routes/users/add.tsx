@@ -1,4 +1,4 @@
-import { Prisma, User } from '@prisma/client';
+import { Prisma, User, UserRoles } from '@prisma/client';
 import { ActionFunction, LoaderFunction, useActionData, useCatch } from 'remix';
 import AddUser from '~/modules/AddUser';
 import { register, requireUserId } from '~/utils/session.server';
@@ -24,7 +24,8 @@ export const action: ActionFunction = async ({
     username: body.get('username')?.toString().toLowerCase() as string,
     name: body.get('name') as string,
     email: body.get('email') as string,
-    password: body.get('password') as string
+    password: body.get('password') as string,
+    role: body.get('role') as UserRoles
   };
 
   switch (request.method) {

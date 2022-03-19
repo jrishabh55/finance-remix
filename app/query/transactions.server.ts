@@ -45,3 +45,9 @@ export const getTransactionsCount = async (arg?: Prisma.TransactionCountArgs) =>
 
   return transactionsCount;
 };
+
+export const getTransactionsCategories = (
+  args: Prisma.TransactionCategoryFindManyArgs = { select: { id: true, name: true } }
+) => {
+  return db.transactionCategory.findMany(args);
+};

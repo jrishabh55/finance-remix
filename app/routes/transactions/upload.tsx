@@ -89,7 +89,7 @@ export const action: ActionFunction = async ({ request }): Promise<Response | an
           }))
         });
 
-        return { baseCategory };
+        return { success: true };
 
         // return redirect('/accounts');
       } catch (err: any) {

@@ -10,7 +10,6 @@ datasource db {
   provider             = "mysql"
   url                  = env("DATABASE_URL")
   referentialIntegrity = "prisma"
-  planetScaleMode      = true
 }
 
 enum TransactionType {
@@ -96,4 +95,35 @@ model Transaction {
   account         Account             @relation(fields: [accountId], references: [id])
   user            User                @relation(fields: [userId], references: [id])
   category        TransactionCategory @relation(fields: [categoryId], references: [id])
+}
+
+model Rules {
+  id          String               @id @default(cuid())
+  createdAt   DateTime             @default(now())
+  updatedAt   DateTime             @default(now())
+  name        String               @unique
+  description String               @default("")
+  conditions  TransactionCondition
+  column      TransactionColumns
+  value       String
+}
+
+enum TransactionCondition {
+  CONTAINS
+  NOT_CONTAINS
+  EQUALS
+  NOT_EQUALS
+  GREATER_THAN
+  LESS_THAN
+  GREATER_THAN_OR_EQUAL
+  LESS_THAN_OR_EQUAL
+
+}
+
+enum TransactionColumns {
+  AMOUNT
+  TYPE
+  REFERENCE_ID
+  DESCRIPTION
+  TRANSACTION_DATE
 }

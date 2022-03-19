@@ -1,8 +1,12 @@
+import { UserRoles } from '@prisma/client';
 import { FC, FormEventHandler } from 'react';
 import { Form, useSubmit, useTransition } from 'remix';
 import Button from '~/lib/Button';
 import Card from '~/lib/Card';
 import Input from '~/lib/form/Input';
+import Select from '~/lib/form/Select';
+
+const roles = Object.entries(UserRoles).map(([key, value]) => ({ id: value, name: key }));
 
 const AddUser: FC<{ error?: string }> = ({ error }) => {
   const submit = useSubmit();
@@ -29,9 +33,10 @@ const AddUser: FC<{ error?: string }> = ({ error }) => {
           </Button>
         </div>
       }>
-      <div className="p-4 pb-0 md:w-[35vw]">
+      <div className="max-w-full p-4 pb-0 md:w-[35vw]">
         <Form id="createUser" method="post" onSubmit={handleSubmit}>
           <Input autoComplete="none" required label="Username" name="username" />
+          <Select name="role" label="Role" options={roles} />
           <Input autoComplete="none" required label="Name" name="name" />
           <Input autoComplete="none" required label="Email" name="email" type="email" />
           <Input autoComplete="none" required label="Password" name="password" type="password" />
